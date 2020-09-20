@@ -1,11 +1,19 @@
 import React from 'react'
 import { Table } from 'reactstrap';
-// import BudgetCategory from './BudgetCategory'
-// import TransactionCategory from './TransactionCategory.js'
 
 class SummaryComponent extends React.Component {
 
 //eventually set state here for filtering and revising sum
+
+//create array of category IDs (will eventualy replace table w/category name)
+categoryId = () => {
+    console.log("cat prop check ", this.props.budgets)
+     return this.props.budgets.map(budget => {
+         console.log("cat id ", budget)
+         return this.renderRow(budget);
+     })
+ }
+
 
 renderRow = ({ category_id, category_name, amount }) => {
     return (
@@ -15,10 +23,12 @@ renderRow = ({ category_id, category_name, amount }) => {
                 <td>{category_name}</td>
                 <td>${amount}</td> 
                 <td>{this.findTotalSpend(category_id)}</td> 
+                <td>{Math.round((amount + this.findTotalSpend(category_id)), 2)}</td> 
             </tr>
         </>
     );
 }
+
     findTotalSpend = (categoryId) => {
         const categorySumById = this.totalCategorySpend();
         return categorySumById[categoryId]
@@ -27,14 +37,10 @@ renderRow = ({ category_id, category_name, amount }) => {
     totalCategorySpend = () => {
         if (this.props.transactions){
             console.log(this.props.transactions)
-            // experimenting with JavaScript's Set object to create unique array object
-            // return this.props.transactions.map(transaction => transaction.category_id)
-            // return [... new Set(this.props.transactions.map(transaction => transaction.category_id))]
             const categorySumById = {}
             this.props.transactions.map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
                 if (!(transaction.category_id in categorySumById)){
-                    // newObj = {...categorySumById}
                     categorySumById[transaction.category_id] = transaction.amount
                 } else {
                     // if key exists, sum existing value
@@ -43,38 +49,6 @@ renderRow = ({ category_id, category_name, amount }) => {
             })
             return categorySumById;
         }
-    }
-
-    // delete the below; not using this logic anymore...
-
-    // parseBudgetHelper = (targetProp) => {
-    //     const idk = this.props.budgets
-    //     switch (targetProp) {
-    //         case "categoryName":
-                
-    //             break;
-    //         case "categoryBudget":
-
-    //             break;
-    //         case "categorySpend":
-
-    //             break;
-    //         default:
-    //             break;
-    //     };
-    // }
-
-
-
-
-//create array of category IDs (will eventualy replace table w/category name)
-    categoryId = () => {
-       console.log("cat prop check ", this.props.budgets)
-        return this.props.budgets.map(budget => {
-            console.log("cat id ", budget)
-            return this.renderRow(budget);
-        })
-        
     }
 
 //populate table with category names
@@ -93,15 +67,13 @@ renderRow = ({ category_id, category_name, amount }) => {
     }
 
 //array of transaction objects
-    transObj = () => {
+    transAmount = () => {
         return this.props.transactions.map(transObj => {
-            return transObj
+            return transObj.amount
         })
     }
 
     render() {
-        // let transArray = this.props.transactions.map(transObj => transObj)
-
         return(
             
             <>
@@ -115,16 +87,28 @@ renderRow = ({ category_id, category_name, amount }) => {
                 <Table>
                     <thead>
                     <tr>
-                        <th>category id</th>
-                        <th>category name</th>
-                        <th>budget amount</th> 
-                        <th>spend by category amount</th>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Category Budget</th> 
+                        <th>Spend by Category Amount</th>
+                        <th>Variance</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {this.categoryId() || null}
                 </tbody>
+                    <tr>
+                        <td>Grand Total</td>
+                        <td></td>
+                        <td>{this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
+                        <td>{Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+                        <td>{this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+
+                        {/* <td>{Math.round((amount + this.findTotalSpend(category_id)), 2)}</td>  */}
+
+
+                    </tr>
                 </Table>
             </div>
             }
