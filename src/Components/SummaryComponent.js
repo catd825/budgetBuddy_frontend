@@ -1,22 +1,97 @@
 import React from 'react'
+import { Table } from 'reactstrap';
+// import BudgetCategory from './BudgetCategory'
+// import TransactionCategory from './TransactionCategory.js'
 
 
 class SummaryComponent extends React.Component {
+
+//create array of category IDs (will eventualy replace table w/category name)
+    categoryId = () => {
+        return this.props.budgets.map(budget => {
+            return <tr>{budget.id}</tr>
+            })
+    }
+
+ //Create array of IDs    
+    transCategory = () => {
+       return this.categoryId().map(budget => budget.props.children)
+    }
+
+
+//create array of transaction amounts
+    transObjArray = () => {
+        return this.props.transactions.map(transObj => {
+            return transObj
+        })
+    }
+
+    reduceTrans = () => {
+        debugger
+
+        // return this.transObjArray().map(trans => {
+        //     debugger
+        // })
+    }
+
+
+//populate table with category names
+    budgetCategory = () => {
+        return this.props.budgets.map(budget => {
+        return <tr>{budget.id}</tr> //will change to category name
+
+            })
+    }
+
+//populate table with budgeted amounts
+    budgetAmount = () => {
+        return this.props.budgets.map(budget => {
+        return <tr>${budget.amount}</tr>
+            })
+    }
+
+
+
+
     render() {
-        console.log(this.props)
         return(
             <>
             {this.props.transactions === null || this.props.budgets === null || this.props.bank_accounts === null
             
             ?
             "" :
-            <>
-            <p>Budget: {this.props.budgets[0].category_name}</p>
-            <p>Amount: {this.props.budgets[0].amount}</p>
-            <p>Spend: {this.props.budgets[0].amount}</p>
-            
-            </>
-            
+            <div className="homepage-div">
+            <p>Search/filter</p>
+            <h1>spend by category</h1>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>category id</th>
+                        <th>budget amount</th>
+                        <th>spend by category amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <td>
+                    <tr>
+                        {this.categoryId()}
+                    </tr>
+                </td>
+                <td>
+                    <tr>
+                        {this.budgetAmount()}
+                    </tr>
+                </td>
+
+                <td>
+                    <tr>
+                        {this.reduceTrans()}
+                    </tr>
+                </td>
+
+                </tbody>
+                </Table>
+            </div>
             }
             </>
 
