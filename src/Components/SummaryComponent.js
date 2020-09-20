@@ -3,42 +3,84 @@ import { Table } from 'reactstrap';
 // import BudgetCategory from './BudgetCategory'
 // import TransactionCategory from './TransactionCategory.js'
 
-
 class SummaryComponent extends React.Component {
+
+//eventually set state here for filtering and revising sum
+
+renderRow = ({ category_id, category_name, amount }) => {
+    return (
+        <>
+            <tr>
+                <td>{category_id}</td>
+                <td>{category_name}</td>
+                <td>${amount}</td> 
+                <td>{this.findTotalSpend(category_id)}</td> 
+            </tr>
+        </>
+    );
+}
+    findTotalSpend = (categoryId) => {
+        const categorySumById = this.totalCategorySpend();
+        return categorySumById[categoryId]
+    }
+
+    totalCategorySpend = () => {
+        if (this.props.transactions){
+            console.log(this.props.transactions)
+            // experimenting with JavaScript's Set object to create unique array object
+            // return this.props.transactions.map(transaction => transaction.category_id)
+            // return [... new Set(this.props.transactions.map(transaction => transaction.category_id))]
+            const categorySumById = {}
+            this.props.transactions.map(transaction => {
+                // check if object has key of category_id; if not, create that and set to transactionObj amount
+                if (!(transaction.category_id in categorySumById)){
+                    // newObj = {...categorySumById}
+                    categorySumById[transaction.category_id] = transaction.amount
+                } else {
+                    // if key exists, sum existing value
+                    categorySumById[transaction.category_id] += transaction.amount
+                }
+            })
+            return categorySumById;
+        }
+    }
+
+    // delete the below; not using this logic anymore...
+
+    // parseBudgetHelper = (targetProp) => {
+    //     const idk = this.props.budgets
+    //     switch (targetProp) {
+    //         case "categoryName":
+                
+    //             break;
+    //         case "categoryBudget":
+
+    //             break;
+    //         case "categorySpend":
+
+    //             break;
+    //         default:
+    //             break;
+    //     };
+    // }
+
+
+
 
 //create array of category IDs (will eventualy replace table w/category name)
     categoryId = () => {
+       console.log("cat prop check ", this.props.budgets)
         return this.props.budgets.map(budget => {
-            return <tr>{budget.id}</tr>
-            })
-    }
-
- //Create array of IDs    
-    transCategory = () => {
-       return this.categoryId().map(budget => budget.props.children)
-    }
-
-
-//create array of transaction amounts
-    transObjArray = () => {
-        return this.props.transactions.map(transObj => {
-            return transObj
+            console.log("cat id ", budget)
+            return this.renderRow(budget);
         })
+        
     }
-
-    reduceTrans = () => {
-        debugger
-
-        // return this.transObjArray().map(trans => {
-        //     debugger
-        // })
-    }
-
 
 //populate table with category names
     budgetCategory = () => {
         return this.props.budgets.map(budget => {
-        return <tr>{budget.id}</tr> //will change to category name
+            return budget.category_name //will change to category name
 
             })
     }
@@ -46,15 +88,22 @@ class SummaryComponent extends React.Component {
 //populate table with budgeted amounts
     budgetAmount = () => {
         return this.props.budgets.map(budget => {
-        return <tr>${budget.amount}</tr>
-            })
+            return budget.amount
+        })
     }
 
-
-
+//array of transaction objects
+    transObj = () => {
+        return this.props.transactions.map(transObj => {
+            return transObj
+        })
+    }
 
     render() {
+        // let transArray = this.props.transactions.map(transObj => transObj)
+
         return(
+            
             <>
             {this.props.transactions === null || this.props.budgets === null || this.props.bank_accounts === null
             
@@ -67,28 +116,14 @@ class SummaryComponent extends React.Component {
                     <thead>
                     <tr>
                         <th>category id</th>
-                        <th>budget amount</th>
+                        <th>category name</th>
+                        <th>budget amount</th> 
                         <th>spend by category amount</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                <td>
-                    <tr>
-                        {this.categoryId()}
-                    </tr>
-                </td>
-                <td>
-                    <tr>
-                        {this.budgetAmount()}
-                    </tr>
-                </td>
-
-                <td>
-                    <tr>
-                        {this.reduceTrans()}
-                    </tr>
-                </td>
-
+                    {this.categoryId() || null}
                 </tbody>
                 </Table>
             </div>
