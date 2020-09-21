@@ -14,7 +14,6 @@ categoryId = () => {
      })
  }
 
-
 renderRow = ({ category_id, category_name, amount }) => {
     return (
         <>
@@ -36,7 +35,7 @@ renderRow = ({ category_id, category_name, amount }) => {
 
     totalCategorySpend = () => {
         if (this.props.transactions){
-            console.log(this.props.transactions)
+            // console.log(this.props.transactions)
             const categorySumById = {}
             this.props.transactions.map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
@@ -92,6 +91,7 @@ renderRow = ({ category_id, category_name, amount }) => {
                         <th>Category Budget</th> 
                         <th>Spend by Category Amount</th>
                         <th>Variance</th>
+                        <th></th>
                     </tr>
                 </thead>
 

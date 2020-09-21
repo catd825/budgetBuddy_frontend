@@ -1,17 +1,27 @@
 import React from 'react'
 import BudgetItem from './BudgetItem'
-import { Table } from 'reactstrap';
+import { withRouter} from 'react-router-dom'
+import { Table, Button } from 'reactstrap';
+
 
 class BudgetList extends React.Component {
     
     budgetList = () => {
-        return this.props.budgets.map(budget => <BudgetItem key={budget.id} budgetObj={budget} />)
+        return this.props.budgets.map(budget => <BudgetItem key={budget.id} deleteHelper={this.props.deleteHelper} budgetObj={budget} />)
+    }
+
+    routeChange=()=> {
+      let path = `/budgets/new`;
+      this.props.history.push(path)
     }
     
     render() {
       console.log(this.props)
         return(
             <>
+              <br/><br/>      
+                    <Button onClick={this.routeChange}>Create New Budget</Button>
+                <br/><br/>  
             <Table>
             <thead>
               <tr>
@@ -31,4 +41,4 @@ class BudgetList extends React.Component {
 
 }
 
-export default BudgetList
+export default withRouter(BudgetList)
