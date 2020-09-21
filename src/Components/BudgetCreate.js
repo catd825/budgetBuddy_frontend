@@ -25,16 +25,42 @@ class BudgetCreate extends React.Component {
         })
     }
 
+//shows currently used categories
+    currentUserCategories = () => {
+        if(this.props.budgets) {
+            return this.props.budgets.map(budget => {
+                return budget.category_name
+            })                   
+        }
+    }
+
+
+    //maps out all categories 
     mapCategories = () => {
         if (this.props.categories){
             let category_name = ""
             return this.props.categories.map(category => {
-                return <option>{category_name = category.name}</option>
+                return category_name = category.name
+                // return <option>{category_name = category.name}</option>
             }) 
         } 
     }
 
+//allows user to only select categories not currently used
+    showCategories = () => {
+        let current = this.currentUserCategories();
+        let all = this.mapCategories();
+        let revised = new Set(current);
+        let unused = [...new Set([...all].filter(x => !revised.has(x)))]
+        
+        return unused.map(category => {
+            return <option>{category}</option>
+        })
+    }
+    
+
     render() {
+
         return(
             <>
             {this.props.budgets === null ? "" : 
@@ -45,7 +71,10 @@ class BudgetCreate extends React.Component {
                 <FormGroup>
                     <Label for="category_name">Select</Label>
                         <Input type="select" name="category_name" onChange={this.changeHelper} value={this.state.category_name}>
-                        {this.mapCategories()}
+                        <option>Select Category</option>
+                        {this.showCategories()}
+                        {/* {this.mapCategories()} */}
+                        {/* {this.currentUserCategories()} */}
                         </Input>
                 </FormGroup>
 

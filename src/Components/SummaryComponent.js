@@ -7,9 +7,9 @@ class SummaryComponent extends React.Component {
 
 //create array of category IDs (will eventualy replace table w/category name)
 categoryId = () => {
-    console.log("cat prop check ", this.props.budgets)
+    // console.log("cat prop check ", this.props.budgets)
      return this.props.budgets.map(budget => {
-         console.log("cat id ", budget)
+        //  console.log("cat id ", budget)
          return this.renderRow(budget);
      })
  }
@@ -21,7 +21,7 @@ renderRow = ({ category_id, category_name, amount }) => {
                 <td>{category_id}</td>
                 <td>{category_name}</td>
                 <td>${amount}</td> 
-                <td>{this.findTotalSpend(category_id)}</td> 
+                <td>{this.findTotalSpend(category_id) || 0}</td> 
                 <td>{Math.round((amount + this.findTotalSpend(category_id)), 2)}</td> 
             </tr>
         </>
@@ -30,7 +30,8 @@ renderRow = ({ category_id, category_name, amount }) => {
 
     findTotalSpend = (categoryId) => {
         const categorySumById = this.totalCategorySpend();
-        return categorySumById[categoryId]
+        // debugger
+        return categorySumById[categoryId] || 0
     }
 
     totalCategorySpend = () => {

@@ -8,7 +8,6 @@ import BudgetCreate from '../Components/BudgetCreate'
 class BudgetContainer extends React.Component {
 
     render () {
-        console.log("budget props", this.props)
         return (
             <>
                 {this.props.budgets === null || this.props.users === null || this.props.categories === null
