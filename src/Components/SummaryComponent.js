@@ -7,25 +7,31 @@ class SummaryComponent extends React.Component {
 
 //create array of category IDs (will eventualy replace table w/category name)
 categoryId = () => {
-    // console.log("cat prop check ", this.props.budgets)
      return this.props.budgets.map(budget => {
-        //  console.log("cat id ", budget)
          return this.renderRow(budget);
      })
  }
 
-renderRow = ({ category_id, category_name, amount }) => {
+renderRow = ({ category_id, category_name, amount, trans_type }) => {
+    let totalSpend = this.findTotalSpend(category_id) || 0
+    let variance = Math.round((amount + this.findTotalSpend(category_id)), 2)
+    let absValue = Math.abs(amount) + Math.abs(totalSpend)
+    // debugger
+    
+    if(trans_type ==="Expense" && absValue>0){
+    
     return (
         <>
             <tr>
                 <td>{category_id}</td>
                 <td>{category_name}</td>
                 <td>${amount}</td> 
-                <td>{this.findTotalSpend(category_id) || 0}</td> 
-                <td>{Math.round((amount + this.findTotalSpend(category_id)), 2)}</td> 
+                <td>${totalSpend}</td> 
+                <td>${variance}</td> 
             </tr>
         </>
-    );
+        );
+    }
 }
 
     findTotalSpend = (categoryId) => {
@@ -36,7 +42,6 @@ renderRow = ({ category_id, category_name, amount }) => {
 
     totalCategorySpend = () => {
         if (this.props.transactions){
-            // console.log(this.props.transactions)
             const categorySumById = {}
             this.props.transactions.map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
@@ -46,50 +51,118 @@ renderRow = ({ category_id, category_name, amount }) => {
                     // if key exists, sum existing value
                     categorySumById[transaction.category_id] += transaction.amount
                 }
+
             })
+            // debugger
             return categorySumById;
         }
     }
 
+
 //populate table with category names
     budgetCategory = () => {
         return this.props.budgets.map(budget => {
-            return budget.category_name //will change to category name
-
+            return budget.category_name 
             })
     }
 
 //populate table with budgeted amounts
     budgetAmount = () => {
         return this.props.budgets.map(budget => {
-            return budget.amount
+            if(budget.trans_type ==="Expense"){
+                return budget.amount}
+            else{
+                return 0
+            }
         })
     }
 
 //array of transaction objects
     transAmount = () => {
         return this.props.transactions.map(transObj => {
-            return transObj.amount
+            if(transObj.trans_type === "Expense"){
+            return transObj.amount}
+            else{
+                return 0
+            }
         })
     }
 
+
+    projectedIncome = () => {
+        return this.props.budgets.map(budget => {
+            if(budget.trans_type ==="Income" || budget.amount < 0){
+                return budget.amount}
+            else{
+                return 0
+            }
+        })
+    }
+
+//array of transaction objects - this can be cleaned up
+    actualIncome = () => {
+        return this.props.transactions.map(transObj => {
+            if(transObj.trans_type === "Income" || transObj.amount > 0){
+            return transObj.amount}
+            else{
+                return 0
+            }
+        })
+    }
+
+
+
+
+
     render() {
+
         return(
-            
             <>
             {this.props.transactions === null || this.props.budgets === null || this.props.bank_accounts === null
             
             ?
             "" :
             <div className="homepage-div">
-            <p>Search/filter</p>
-            <h1>spend by category</h1>
+            <br/> <br/> <br/>
+            <p>add a month filter here</p>
+            <br/> <br/> <br/>
+            <h5>Earning Summary</h5>
+
+            <Table>
+                    <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Projected Income</th> 
+                        <th>Actual Income</th>
+                        <th>Variance</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Income</td>
+                        <td>${this.projectedIncome().reduce((a,b) => a+b, 0)}</td>
+                        <td>${this.actualIncome().reduce((a,b) => a+b, 0)}</td>
+                        <td>${this.projectedIncome().reduce((a,b) => a+b, 0) + this.actualIncome().reduce((a,b) => a+b, 0)}</td>
+                    </tr>
+                    </tbody>
+                </Table>
+                <br/> <br/> <br/>
+
+
+
+
+
+            <h5>Spending Summary</h5>
                 <Table>
                     <thead>
                     <tr>
                         <th>Category ID</th>
                         <th>Category Name</th>
-                        <th>Category Budget</th> 
+                        <th>Expense Budget</th> 
                         <th>Spend by Category Amount</th>
                         <th>Variance</th>
                         <th></th>
@@ -98,19 +171,16 @@ renderRow = ({ category_id, category_name, amount }) => {
 
                 <tbody>
                     {this.categoryId() || null}
-                </tbody>
                     <tr>
                         <td>Grand Total</td>
                         <td></td>
-                        <td>{this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
-                        <td>{Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
-                        <td>{this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
-
-                        {/* <td>{Math.round((amount + this.findTotalSpend(category_id)), 2)}</td>  */}
-
-
+                        <td>${this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
+                        <td>${Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+                        <td>${this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
                     </tr>
+                    </tbody>
                 </Table>
+
             </div>
             }
             </>

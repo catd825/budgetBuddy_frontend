@@ -90,7 +90,6 @@ class SummaryContainer extends React.Component {
         .then(revisedBudget => {    
           this.setState({
               budgets: [...newBudgetArray, revisedBudget]
-            //   unsortedPosts : [...retrievedPosts]
           })
           this.props.history.push(`/budgets`)
           })

@@ -7,7 +7,11 @@ import { Table, Button } from 'reactstrap';
 class BudgetList extends React.Component {
     
     budgetList = () => {
-        return this.props.budgets.map(budget => <BudgetItem key={budget.id} deleteHelper={this.props.deleteHelper} budgetObj={budget} />)
+        return this.props.budgets.map(budget => {
+          if(budget.amount>0){
+          return <BudgetItem key={budget.id} deleteHelper={this.props.deleteHelper} budgetObj={budget} />
+          }
+        })
     }
 
     routeChange=()=> {
