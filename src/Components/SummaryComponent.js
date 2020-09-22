@@ -1,13 +1,33 @@
 import React from 'react'
 import { Table } from 'reactstrap';
+import SummaryFilter from './SummaryFilter'
 
 class SummaryComponent extends React.Component {
 
-//eventually set state here for filtering and revising sum
+state={month: 0}
+
+
+changeHandler = (e) => {
+    this.setState({month: parseInt(e.target.value)})
+}
+
+filterBudgetsByMonth = () => {
+    return this.props.budgets.filter(budgetObj => {
+        // debugger
+        return budgetObj.month === this.state.month ? this.state.month : 0
+
+            })
+    }
+
+    filterTransactionsByMonth = () => {
+        return this.props.transactions.filter(transObj => {
+            return transObj.month === this.state.month ? this.state.month : 0
+                })
+        }
 
 //create array of category IDs (will eventualy replace table w/category name)
 categoryId = () => {
-     return this.props.budgets.map(budget => {
+     return this.filterBudgetsByMonth().map(budget => {
          return this.renderRow(budget);
      })
  }
@@ -61,14 +81,14 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
 
 //populate table with category names
     budgetCategory = () => {
-        return this.props.budgets.map(budget => {
+        return this.filterBudgetsByMonth().map(budget => {
             return budget.category_name 
             })
     }
 
 //populate table with budgeted amounts
     budgetAmount = () => {
-        return this.props.budgets.map(budget => {
+        return this.filterBudgetsByMonth().map(budget => {
             if(budget.trans_type ==="Expense"){
                 return budget.amount}
             else{
@@ -79,7 +99,7 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
 
 //array of transaction objects
     transAmount = () => {
-        return this.props.transactions.map(transObj => {
+        return this.filterTransactionsByMonth().map(transObj => {
             if(transObj.trans_type === "Expense"){
             return transObj.amount}
             else{
@@ -90,7 +110,8 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
 
 
     projectedIncome = () => {
-        return this.props.budgets.map(budget => {
+        // return this.props.budgets.map(budget => {
+        return this.filterBudgetsByMonth().map(budget => {
             if(budget.trans_type ==="Income" || budget.amount < 0){
                 return budget.amount}
             else{
@@ -101,7 +122,7 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
 
 //array of transaction objects - this can be cleaned up
     actualIncome = () => {
-        return this.props.transactions.map(transObj => {
+        return this.filterTransactionsByMonth().map(transObj => {
             if(transObj.trans_type === "Income" || transObj.amount > 0){
             return transObj.amount}
             else{
@@ -115,6 +136,9 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
 
 
     render() {
+        // console.log(this.filterBudgetsByMonth())
+        // console.log(this.filterTransactionsByMonth())
+
 
         return(
             <>
@@ -124,7 +148,7 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
             "" :
             <div className="homepage-div">
             <br/> <br/> <br/>
-            <p>add a month filter here</p>
+            <SummaryFilter month={this.state.month} filterBudget={this.filterBudgetsByMonth} filterTrans={this.filterTransactionsByMonth} changeHandler={this.changeHandler} />
             <br/> <br/> <br/>
             <h5>Earning Summary</h5>
 
