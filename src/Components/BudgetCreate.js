@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 
 
 class BudgetCreate extends React.Component {
@@ -7,10 +7,10 @@ class BudgetCreate extends React.Component {
         user_id: this.props.users[0].id,
         category_id: "",
         amount: 0,
-        date: "",
         category_name: "",
         user_name: this.props.users[0].name,
-        trans_type: "Expense"
+        trans_type: "Expense",
+        month: 0
     }
 
 
@@ -64,6 +64,7 @@ class BudgetCreate extends React.Component {
     
 
     render() {
+        console.log(this.state)
 
         return(
             <>
@@ -86,15 +87,23 @@ class BudgetCreate extends React.Component {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="d34ate">Date</Label>
-                    <Input
-                    onChange={this.changeHelper}
-                    value={this.state.date}
-                    type="date"
-                    name="date"
-                    placeholder="date placeholder"
-                    />
-                </FormGroup>
+                <Label for="exampleCustomSelect">Select Budget Month</Label>
+                <CustomInput name="month" type="select" onChange={this.changeHelper}>
+                    <option value="">Select</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </CustomInput>
+            </FormGroup>
 
                     <Input type="submit"></Input>
                 </Form>

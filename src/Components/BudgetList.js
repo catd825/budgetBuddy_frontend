@@ -30,7 +30,7 @@ class BudgetList extends React.Component {
             <thead>
               <tr>
                 <th></th>
-                <th>Date</th>
+                <th>Month</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th></th>

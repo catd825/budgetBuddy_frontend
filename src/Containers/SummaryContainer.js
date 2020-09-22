@@ -97,6 +97,7 @@ class SummaryContainer extends React.Component {
 
       createBudgetHandler = (obj) => {
           let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
+        //   let month = new Date(obj.date).getMonth() + 1
           let newBudgetObj = {...obj, category_id: find_category_obj.id}
 
         const configObj = {

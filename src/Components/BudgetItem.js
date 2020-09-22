@@ -19,7 +19,7 @@ class BudgetItem extends React.Component {
             <tbody>
             <tr>
               <th scope="row"></th>
-              <td>{this.props.budgetObj.date}</td>
+              <td>{this.props.budgetObj.month}</td>
               <td>{this.props.budgetObj.category_name}</td>
               <td>{this.props.budgetObj.amount}</td>
               <td><Button onClick={this.routeChange}>Edit</Button></td>

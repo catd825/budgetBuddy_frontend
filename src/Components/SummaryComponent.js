@@ -13,9 +13,7 @@ changeHandler = (e) => {
 
 filterBudgetsByMonth = () => {
     return this.props.budgets.filter(budgetObj => {
-        // debugger
         return budgetObj.month === this.state.month ? this.state.month : 0
-
             })
     }
 
@@ -32,11 +30,12 @@ categoryId = () => {
      })
  }
 
-renderRow = ({ category_id, category_name, amount, trans_type }) => {
+renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
     let totalSpend = this.findTotalSpend(category_id) || 0
     let variance = Math.round((amount + this.findTotalSpend(category_id)), 2)
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
     // debugger
+    //total spend currently does not take month into account
     
     if(trans_type ==="Expense" && absValue>0){
     
@@ -138,7 +137,7 @@ renderRow = ({ category_id, category_name, amount, trans_type }) => {
     render() {
         // console.log(this.filterBudgetsByMonth())
         // console.log(this.filterTransactionsByMonth())
-
+        console.log(this.state)
 
         return(
             <>
