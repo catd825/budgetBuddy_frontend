@@ -21,7 +21,7 @@ class BudgetItem extends React.Component {
               <th scope="row"></th>
               <td>{this.props.budgetObj.month}</td>
               <td>{this.props.budgetObj.category_name}</td>
-              <td>{this.props.budgetObj.amount}</td>
+              <td>${this.props.budgetObj.amount}</td>
               <td><Button onClick={this.routeChange}>Edit</Button></td>
               <td><Button color="danger" onClick={this.deleteHelper} >Delete</Button></td>
             </tr>

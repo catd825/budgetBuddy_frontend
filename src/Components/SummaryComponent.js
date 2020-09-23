@@ -62,7 +62,7 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
     totalCategorySpend = () => {
         if (this.props.transactions){
             const categorySumById = {}
-            this.props.transactions.map(transaction => {
+            this.filterTransactionsByMonth().map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
                 if (!(transaction.category_id in categorySumById)){
                     categorySumById[transaction.category_id] = transaction.amount
@@ -70,9 +70,8 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
                     // if key exists, sum existing value
                     categorySumById[transaction.category_id] += transaction.amount
                 }
-
+                // debugger
             })
-            // debugger
             return categorySumById;
         }
     }
@@ -135,9 +134,6 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
 
 
     render() {
-        // console.log(this.filterBudgetsByMonth())
-        // console.log(this.filterTransactionsByMonth())
-        console.log(this.state)
 
         return(
             <>
@@ -221,56 +217,3 @@ export default SummaryComponent
 
 
 
-
-
-
-
-
-
-
-
-
-//move to new component and import here
-// import { Chart } from 'react-charts'
- 
-// function MyChart(props) {
-//     const data = React.useMemo(
-//       () => [
-//         {
-//           label: 'Series 1',
-//           data: [{ x: 1, y: 10 }, { x: 2, y: 10 }, { x: 3, y: 10 }]
-//         },
-//         {
-//           label: 'Series 2',
-//           data: [{ x: 1, y: 10 }, { x: 2, y: 10 }, { x: 3, y: 10 }]
-//         },
-//         {
-//           label: 'Series 3',
-//           data: [{ x: 1, y: 10 }, { x: 2, y: 10 }, { x: 3, y: 10 }]
-//         }
-//       ],
-//       []
-//     )
-   
-//     const axes = React.useMemo(
-//       () => [
-//         { primary: true, type: 'linear', position: 'bottom' },
-//         { type: 'linear', position: 'left' }
-//       ],
-//       []
-//     )
-//   //  console.log(props)
-//     return (
-//       <div
-//         style={{
-//           width: '400px',
-//           height: '300px'
-//         }}
-//       >
-//         <Chart data={data} axes={axes} />
-//       </div>
-
-//     )
-//   }
-
-// export default MyChart

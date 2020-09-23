@@ -7,6 +7,7 @@ import BudgetCreate from '../Components/BudgetCreate'
 
 class BudgetContainer extends React.Component {
 
+
     render () {
         return (
             <>
@@ -15,7 +16,6 @@ class BudgetContainer extends React.Component {
                     ""
                 :
                 <>
-
                     <Switch> 
                         <Route exact path="/budgets/:id/edit" render={({match})=> {
                             let id = parseInt(match.params.id)
