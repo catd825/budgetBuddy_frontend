@@ -23,7 +23,7 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="light" className="sticky" light expand="md">
-        <NavbarBrand href="/">console.log(this.budget)</NavbarBrand>
+        <NavbarBrand href="/">finance app</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -62,7 +62,7 @@ const NavBar = (props) => {
 
 
           </Nav>
-          <NavbarText>Simple Text</NavbarText>
+          <NavbarText>Welcome, user!</NavbarText>
         </Collapse>
       </Navbar>
     </div>

@@ -4,7 +4,7 @@ import SummaryFilter from './SummaryFilter'
 
 class SummaryComponent extends React.Component {
 
-state={month: 1}
+state={month: 0}
 
 
 changeHandler = (e) => {
@@ -35,9 +35,11 @@ categoryId = () => {
      })
  }
 
-renderRow = ({ category_id, category_name, amount, trans_type}) => {
-    let totalSpend = Math.round(this.findTotalSpend(category_id, 2)) || 0
-    let variance = Math.round((amount + this.findTotalSpend(category_id)), 2)
+
+
+renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
+    let totalSpend = Math.round(this.findTotalSpend(category_id, month),2) || 0
+    let variance = Math.round((amount + this.findTotalSpend(category_id, month)), 2)
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
     
     if(trans_type ==="Expense" && absValue>0){
@@ -50,44 +52,43 @@ renderRow = ({ category_id, category_name, amount, trans_type}) => {
                 <td>${amount}</td> 
                 <td>${totalSpend}</td> 
                 <td>${variance}</td> 
+
             </tr>
         </>
         );
     }
 }
 
-    findTotalSpend = (categoryId) => {
+    findTotalSpend = (categoryId, month) => {
+        console.log(categoryId)
         const categorySumById = this.totalCategorySpend();
-        return categorySumById[categoryId] || 0
+
+        
+        if (categorySumById[categoryId]) {
+            return categorySumById[categoryId][month]
+        } else {
+            return 0
+        }
     }
 
     totalCategorySpend = () => {
         if (this.props.transactions){
-            const categorySumById = {}
+            const categoryMonthSumById = {}
             this.filterTransactionsByMonth().map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
-                
-                let transaction_month = transaction.month
-                let transaction_amount = transaction.amount
-                // console.log(transaction_month, transaction_amount)
-
-                if (!(transaction.category_id in categorySumById)){
-                    // debugger
-                    categorySumById[transaction.category_id] = transaction.amount
-
-                    // categorySumById[transaction.category_id] = {[transaction_month]: transaction.amount}
-                    // console.log("first", categorySumById)
+                if (!(transaction.category_id in categoryMonthSumById)){
+                    // category key is equal to transaction amount for all months
+                    categoryMonthSumById[transaction.category_id] = {}
+                    categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
+                } else if (!(categoryMonthSumById[transaction.category_id][transaction.month] in categoryMonthSumById[transaction.category_id])){
+                    categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
                 } else {
-                    // if key exists, sum existing value
-                    // console.log("second", categorySumById)
-                    categorySumById[transaction.category_id] += transaction.amount
-                    // console.log("third", categorySumById)
-                    // categorySumById[transaction.category_id] += {[transaction_month]: transaction.amount}
+                    //category key is equal to transaction amount for all months
+                    categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
                 }
             })
-            // console.log(categorySumById)
-            return categorySumById;
-
+            console.log("total cat spend ", categoryMonthSumById)
+            return categoryMonthSumById;
         }
     }
 
@@ -145,6 +146,8 @@ renderRow = ({ category_id, category_name, amount, trans_type}) => {
     }
 
     render() {
+
+        
 
         return(
             <>
@@ -207,6 +210,7 @@ renderRow = ({ category_id, category_name, amount, trans_type}) => {
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
                         <td>${Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+                        
                     </tr>
                     </tbody>
                 </Table>
@@ -214,7 +218,6 @@ renderRow = ({ category_id, category_name, amount, trans_type}) => {
             </div>
             }
             </>
-
         )
     }
 
