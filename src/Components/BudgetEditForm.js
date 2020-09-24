@@ -41,7 +41,7 @@ class BudgetEditForm extends React.Component {
                     <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
                 </FormGroup>
 
-                <FormGroup>
+                {/* <FormGroup>
                 <Label for="exampleCustomSelect">Select Budget Month</Label>
                 <CustomInput name="month" type="select" value={this.state.month} onChange={this.changeHelper}>
                     <option value="">Select</option>
@@ -58,7 +58,7 @@ class BudgetEditForm extends React.Component {
                     <option value="11">November</option>
                     <option value="12">December</option>
                 </CustomInput>
-            </FormGroup>
+            </FormGroup> */}
 
                     <Input type="submit"></Input>
                 </Form>

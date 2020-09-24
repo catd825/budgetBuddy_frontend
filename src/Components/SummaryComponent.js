@@ -4,7 +4,7 @@ import SummaryFilter from './SummaryFilter'
 
 class SummaryComponent extends React.Component {
 
-state={month: 0}
+state={month: 1}
 
 
 changeHandler = (e) => {
@@ -12,30 +12,33 @@ changeHandler = (e) => {
 }
 
 filterBudgetsByMonth = () => {
-    return this.props.budgets.filter(budgetObj => {
-        return budgetObj.month === this.state.month ? this.state.month : 0
+    return this.props.budgets.filter(budgetObj => {  
+      if(this.state.month === budgetObj.month){  
+        return budgetObj.month} else if (this.state.month === 0) { 
+          return budgetObj
+        }
             })
     }
 
     filterTransactionsByMonth = () => {
-        return this.props.transactions.filter(transObj => {
-            return transObj.month === this.state.month ? this.state.month : 0
+        return this.props.transactions.filter(transObj => {  
+          if(this.state.month === transObj.month){ 
+            return transObj.month} else if (this.state.month === 0) { 
+              return transObj
+            }
                 })
         }
 
-//create array of category IDs (will eventualy replace table w/category name)
 categoryId = () => {
      return this.filterBudgetsByMonth().map(budget => {
          return this.renderRow(budget);
      })
  }
 
-renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
-    let totalSpend = this.findTotalSpend(category_id) || 0
+renderRow = ({ category_id, category_name, amount, trans_type}) => {
+    let totalSpend = Math.round(this.findTotalSpend(category_id, 2)) || 0
     let variance = Math.round((amount + this.findTotalSpend(category_id)), 2)
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
-    // debugger
-    //total spend currently does not take month into account
     
     if(trans_type ==="Expense" && absValue>0){
     
@@ -55,7 +58,6 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
 
     findTotalSpend = (categoryId) => {
         const categorySumById = this.totalCategorySpend();
-        // debugger
         return categorySumById[categoryId] || 0
     }
 
@@ -64,15 +66,28 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
             const categorySumById = {}
             this.filterTransactionsByMonth().map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
+                
+                let transaction_month = transaction.month
+                let transaction_amount = transaction.amount
+                // console.log(transaction_month, transaction_amount)
+
                 if (!(transaction.category_id in categorySumById)){
+                    // debugger
                     categorySumById[transaction.category_id] = transaction.amount
+
+                    // categorySumById[transaction.category_id] = {[transaction_month]: transaction.amount}
+                    // console.log("first", categorySumById)
                 } else {
                     // if key exists, sum existing value
+                    // console.log("second", categorySumById)
                     categorySumById[transaction.category_id] += transaction.amount
+                    // console.log("third", categorySumById)
+                    // categorySumById[transaction.category_id] += {[transaction_month]: transaction.amount}
                 }
-                // debugger
             })
+            // console.log(categorySumById)
             return categorySumById;
+
         }
     }
 
@@ -129,10 +144,6 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
         })
     }
 
-
-
-
-
     render() {
 
         return(
@@ -143,7 +154,7 @@ renderRow = ({ category_id, category_name, amount, trans_type, month }) => {
             "" :
             <div className="homepage-div">
             <br/> <br/> <br/>
-            <SummaryFilter month={this.state.month} filterBudget={this.filterBudgetsByMonth} filterTrans={this.filterTransactionsByMonth} changeHandler={this.changeHandler} />
+            <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
             <br/> <br/> <br/>
             <h5>Earning Summary</h5>
 

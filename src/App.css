@@ -43,3 +43,9 @@
   justify-content: center;
   align-items: center;
 }
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}

@@ -23,12 +23,14 @@ class BudgetList extends React.Component {
     }
 
 
-
-  filterBudgetsByMonth = () => {
-    return this.props.budgets.filter(budgetObj => {
-        return budgetObj.month === this.state.month ? this.state.month : 0
-            })
-    }
+    filterBudgetsByMonth = () => {
+      return this.props.budgets.filter(budgetObj => {  //iterate over transactions 
+        if(this.state.month === budgetObj.month){  //if the object's month matches the current month selected, return those transactions
+          return budgetObj.month} else if (this.state.month === 0) {  //if the state is 0, return everything.
+            return budgetObj
+          }
+              })
+      }
 
 
     routeChange=()=> {

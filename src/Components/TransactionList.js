@@ -14,8 +14,11 @@ class TransactionList extends React.Component {
 }  
 
 filterTransactionsByMonth = () => {
-  return this.props.transactions.filter(budgetObj => {
-      return budgetObj.month === this.state.month ? this.state.month : 0
+  return this.props.transactions.filter(transObj => {  //iterate over transactions 
+    if(this.state.month === transObj.month){  //if the object's month matches the current month selected, return those transactions
+      return transObj.month} else if (this.state.month === 0) {  //if the state is 0, return everything.
+        return transObj
+      }
           })
   }
 
@@ -25,6 +28,8 @@ filterTransactionsByMonth = () => {
     }
 
     render () {
+      console.log("transactions", this.props.transactions)
+      console.log("month", this.state)
         return (
             <>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />

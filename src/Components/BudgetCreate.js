@@ -25,14 +25,14 @@ class BudgetCreate extends React.Component {
         })
     }
 
-//shows currently used categories
+//shows currently used categories for current Month
     currentUserCategories = () => {
         if(this.props.budgets) {
             return this.props.budgets.map(budget => {
-                if(budget.amount !== 0 ){
-                    // debugger
+                if(budget.amount !== 0 && budget.month === parseInt(this.state.month)){
                 return budget.category_name
                 }
+                // debugger
             })                   
         }
     }
@@ -41,23 +41,23 @@ class BudgetCreate extends React.Component {
     //maps out all categories 
     mapCategories = () => {
         if (this.props.categories){
-            let category_name = ""
             return this.props.categories.map(category => {
-                return category_name = category.name
-                // return <option>{category_name = category.name}</option>
+                return category.name
             }) 
         } 
     }
 
 //allows user to only select categories not currently used
     showCategories = () => {
-        let current = this.currentUserCategories(); //all categories the user has assigned
-        let all = this.mapCategories(); //all categoriesin database
+        let current = this.currentUserCategories(); //all categories the user has assigned for current month
+        let all = this.mapCategories(); //all categories in database for month
         let revised = new Set(current); //create new set
+        console.log(revised)
         let unused = [...new Set([...all].filter(x => !revised.has(x)))] //filter out categories that havent been assigned
         
         //map into array into selection dropdown
         return unused.map(category => {
+            console.log(category)
             return <option>{category}</option>
         })
     }
@@ -73,19 +73,6 @@ class BudgetCreate extends React.Component {
                 <h2>Create New Category Budget</h2>
                 <Form onSubmit={this.submitHelper}>
                     
-                <FormGroup>
-                    <Label for="category_name">Select</Label>
-                        <Input type="select" name="category_name" onChange={this.changeHelper} value={this.state.category_name}>
-                        <option>Select Category</option>
-                        {this.showCategories()}
-                        </Input>
-                </FormGroup>
-
-                <FormGroup>
-                    <Label style={{fontSize:"1rem"}} for="amount">How much would you like to budget?</Label>
-                    <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
-                </FormGroup>
-
                 <FormGroup>
                 <Label for="exampleCustomSelect">Select Budget Month</Label>
                 <CustomInput name="month" type="select" onChange={this.changeHelper}>
@@ -104,6 +91,19 @@ class BudgetCreate extends React.Component {
                     <option value="12">December</option>
                 </CustomInput>
             </FormGroup>
+            
+                <FormGroup>
+                    <Label for="category_name">Select</Label>
+                        <Input type="select" name="category_name" onChange={this.changeHelper} value={this.state.category_name}>
+                        <option>Select Category</option>
+                        {this.showCategories()}
+                        </Input>
+                </FormGroup>
+
+                <FormGroup>
+                    <Label style={{fontSize:"1rem"}} for="amount">How much would you like to budget?</Label>
+                    <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
+                </FormGroup>
 
                     <Input type="submit"></Input>
                 </Form>

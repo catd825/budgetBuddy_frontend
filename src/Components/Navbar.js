@@ -22,8 +22,8 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar color="light" sticky="top" light expand="md">
-        <NavbarBrand href="/">banking app</NavbarBrand>
+      <Navbar color="light" className="sticky" light expand="md">
+        <NavbarBrand href="/">console.log(this.budget)</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
