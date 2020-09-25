@@ -1,7 +1,7 @@
 import React from 'react';
-// import { Route, Switch, withRouter} from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import TransactionItem from './TransactionItem';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
 
 class TransactionList extends React.Component {
@@ -27,12 +27,32 @@ filterTransactionsByMonth = () => {
         return this.filterTransactionsByMonth().map(transObj=> <TransactionItem key={transObj.id} transObj={transObj}/>)
     }
 
+    transAmount = () => {
+      return this.filterTransactionsByMonth().map(transObj => {
+          if(transObj.trans_type === "Expense"){
+            return transObj.amount}
+          else{
+              return 0
+          }
+      })
+  }
+
+  routeChange=()=> {
+    let path = `/transactions/new`;
+    this.props.history.push(path)
+  }
+
+
+
+
     render () {
       console.log("transactions", this.props.transactions)
       console.log("month", this.state)
         return (
             <>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
+            {/* <Button onClick={this.routeChange}>Create New Budget</Button> */}
+            <p>Total Transactions ${Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</p>
             <Table>
             <thead>
               <tr>
@@ -51,4 +71,4 @@ filterTransactionsByMonth = () => {
     }
 }
 
-export default TransactionList
+export default withRouter(TransactionList)

@@ -119,6 +119,33 @@ class SummaryContainer extends React.Component {
             })
         }
 
+        createTransHandler = (obj) => {
+            console.log(obj)
+            // let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
+          //   let month = new Date(obj.date).getMonth() + 1
+            // let newBudgetObj = {...obj, category_id: find_category_obj.id}
+  
+        //   const configObj = {
+        //       method: 'POST',
+        //       headers: {
+        //           'Content-Type': 'application/json',
+        //           'Accept': 'application/json',
+        //       },
+        //       'body': JSON.stringify(newBudgetObj)
+        //   }
+  
+        //   fetch("http://localhost:3000/user_categories", configObj)
+        //   .then(response => response.json())
+        //   .then(newObj => {
+        //       this.setState({
+        //           budgets: [...this.state.budgets, newObj]
+        //       })
+        //       this.props.history.push(`/budgets`)
+        //       })
+          }
+
+
+
         editTransactionHandler = (transObj) => {
             console.log(transObj)
             let id = transObj.id
@@ -178,7 +205,7 @@ class SummaryContainer extends React.Component {
             <div>
             <Switch>
                 <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} />} />
-                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} />} />
+                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} bank_accounts={this.state.bank_accounts} />} />
                 {/* <Route path="/bank_accounts" render={() => <BankAccountContainer bank_accounts={this.state.bank_accounts} />} /> */}
                 <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} />} />
                 {/* <Route path="/" render={() =>  <MyProgress budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts}/>} /> */}
