@@ -19,7 +19,7 @@ const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
+  console.log(props)
   return (
     <div>
       <Navbar color="light" className="sticky" light expand="md">
@@ -40,6 +40,20 @@ const NavBar = (props) => {
                   Budgets
                 </NavLink>
               </NavItem>
+
+              <NavItem>
+                <NavLink tag={Link} to="/signup">
+                 Signup
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink tag={Link} onClick={props.clickHandler} to="/login">
+                 Logout
+                </NavLink>
+              </NavItem>
+
+
 
 
             {/* <UncontrolledDropdown nav inNavbar>
@@ -62,7 +76,7 @@ const NavBar = (props) => {
 
 
           </Nav>
-          <NavbarText>Welcome, user!</NavbarText>
+          <NavbarText>{props.currentUser? `Welcome, ${props.currentUser.name}! ` : null} </NavbarText>
         </Collapse>
       </Navbar>
     </div>

@@ -9,6 +9,7 @@ class BudgetContainer extends React.Component {
 
 
     render () {
+        console.log("current user", this.props)
         return (
             <>
                 {this.props.budgets === null || this.props.users === null || this.props.categories === null
