@@ -11,16 +11,6 @@ class Signup extends React.Component {
         name: ""
     }
 
-    // resetForm = () => {
-    //     this.setState({
-    //         username: "",
-    //         password: "",
-    //         birthdate: "",
-    //         gender: "",
-    //         gender_other: false,
-    //         location: ""
-    //     })
-    // }
 
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value})
@@ -34,17 +24,6 @@ class Signup extends React.Component {
         // this.resetForm()
     }
 
-    // renderErrors = () => {
-    //     return (
-    //         this.props.signupError.map((error,index) =>
-    //             {
-    //                 return (
-    //                     <p style={{color:"red"}} key={index}>{error}</p>
-    //                 )
-    //             }
-    //         )
-    //     )
-    // }
 
     render () {
         return (

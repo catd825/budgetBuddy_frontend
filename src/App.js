@@ -57,11 +57,14 @@ loginHandler = (userInfo) => {
 
 }
 
+
+
 getToken = () => {
   return localStorage.getItem("token")
 }
 
-componentDidMount(){
+
+retrieveUser = () => {
   const token = this.getToken()
   if (token) {
     fetch("http://localhost:3000/api/v1/profile", {
@@ -73,7 +76,13 @@ componentDidMount(){
   } else {
     this.props.history.push("/signup")
   }
+}
 
+componentDidMount(){
+    const token = this.getToken()
+    if(token){
+      this.retrieveUser(token)
+    }
 }
 
 logOutHandler = () => {

@@ -20,8 +20,9 @@ class SummaryContainer extends React.Component {
 
     componentDidMount () {
         if(this.props.user){
-            // this.fetchUsers()
+            
             const token = this.props.getToken()
+            // this.fetchUsers(token)
             this.fetchBudgets(token)
             this.fetchBankAccounts(token)
             this.fetchCategories(token)
@@ -82,7 +83,7 @@ class SummaryContainer extends React.Component {
 
     fetchCategories = (token) => {
         // const token = this.props.getToken()
-        fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/categories`, {
+        fetch(`http://localhost:3000/categories`, {
             method: "GET",
             headers: {
                         Authorization: `Bearer ${token}`
@@ -92,19 +93,24 @@ class SummaryContainer extends React.Component {
         .then(retrievedCategories => {
             this.setState({
                 categories : [...retrievedCategories]
-            })
+            }, ()=> console.log("fetch categories"))
         })
     }
 
-    // fetchUsers = () => {
-    //     fetch("http://localhost:3000/api/v1/users")
-    //     .then(response => response.json())
-    //     .then(retrievedUsers => {
-    //         this.setState({
-    //             users : [...retrievedUsers],
-    //         })
-    //     })
-    // }
+    fetchUsers = (token) => {
+        fetch("http://localhost:3000/api/v1/users", {
+            method: "GET",
+            headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+        .then(response => response.json())
+        .then(retrievedUsers => {
+            this.setState({
+                users : [...retrievedUsers],
+            })
+        })
+    }
 
 
 
@@ -238,8 +244,8 @@ class SummaryContainer extends React.Component {
 
     render () {
 
-        
         console.log("this.props.user", this.props.user.id)
+        console.log("this.state.transactions", this.state.transactions)
 
         return (
 

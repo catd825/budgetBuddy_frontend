@@ -76,6 +76,7 @@ categoryId = () => {
             const categoryMonthSumById = {}
             this.filterTransactionsByMonth().map(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
+                // debugger
                 if (!(transaction.category_id in categoryMonthSumById)){
                     // category key is equal to transaction amount for all months
                     categoryMonthSumById[transaction.category_id] = {}
@@ -87,10 +88,12 @@ categoryId = () => {
                     categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
                 }
             })
-            // console.log("total cat spend ", categoryMonthSumById)
+            console.log("total cat spend ", categoryMonthSumById)
+            // debugger
             return categoryMonthSumById;
         }
     }
+
 
 
 //populate table with category names
@@ -146,8 +149,6 @@ categoryId = () => {
     }
 
     render() {
-
-        
 
         return(
             <>
