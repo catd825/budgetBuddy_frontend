@@ -23,9 +23,9 @@ class SummaryContainer extends React.Component {
             // this.fetchUsers()
             const token = this.props.getToken()
             this.fetchBudgets(token)
-            this.fetchTransactions(token)
             this.fetchBankAccounts(token)
             this.fetchCategories(token)
+            this.fetchTransactions(token)
         }
     }
 
@@ -113,10 +113,12 @@ class SummaryContainer extends React.Component {
         let id = budgetObj.id
         let budgetArray = [...this.state.budgets]
         let newBudgetArray = budgetArray.filter(budget => budget.id !== id)
+        const token = this.props.getToken() 
       
         const configObj = {
           method: 'PATCH',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
@@ -138,9 +140,11 @@ class SummaryContainer extends React.Component {
         //   let month = new Date(obj.date).getMonth() + 1
           let newBudgetObj = {...obj, category_id: find_category_obj.id}
 
+        const token = this.props.getToken()  
         const configObj = {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
@@ -189,10 +193,12 @@ class SummaryContainer extends React.Component {
             let id = transObj.id
             let transArray = [...this.state.transactions]
             let newTransArray = transArray.filter(trans => trans.id !== id)
+            const token = this.props.getToken()
           
             const configObj = {
               method: 'PATCH',
               headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
               },
@@ -210,6 +216,7 @@ class SummaryContainer extends React.Component {
           }
   
         deleteHandler = (obj) => {
+            const token = this.props.getToken()
             let id = obj.id
             let currentBudgetArray = [...this.state.budgets]
             let newBudgetArray = currentBudgetArray.filter(budget => budget.id !== id)
@@ -218,6 +225,7 @@ class SummaryContainer extends React.Component {
             const configObj = {
                 method: 'DELETE',
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
@@ -240,7 +248,7 @@ class SummaryContainer extends React.Component {
             <div>
             <Switch>
                 <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
-                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts} />} />
+                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts} currentUser={this.props.user}/>} />
                 <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} currentUser={this.props.user} />} />
             </Switch>
             </div>

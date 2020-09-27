@@ -4,11 +4,11 @@ import { Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 
 class BudgetCreate extends React.Component {
     state = {
-        user_id: this.props.users[0].id,
+        user_id: this.props.currentUser.id,
         category_id: "",
         amount: 0,
         category_name: "",
-        user_name: this.props.users[0].name,
+        user_name: this.props.currentUser.name,
         trans_type: "Expense",
         month: 0
     }

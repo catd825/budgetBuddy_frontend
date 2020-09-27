@@ -14,6 +14,7 @@ class TransactionEdit extends React.Component {
         description: this.props.transObj.description || '',
         category_name: this.props.transObj.category_name || '',
         month: this.props.transObj.month || 0
+
     }
 
 
@@ -44,6 +45,7 @@ class TransactionEdit extends React.Component {
     
     render() {
         console.log(this.props)
+        console.log(this.mapCategories())
         return(
             <>
             <Form onSubmit={this.editHelper}>
