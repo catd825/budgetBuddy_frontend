@@ -84,11 +84,11 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
             console.log(111111, this.filterTransactionsByMonth())
             this.filterTransactionsByMonth().forEach(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
-                if (!(transaction.category_id in categoryMonthSumById)){
+                if (!(categoryMonthSumById[transaction.category_id])){
                     // category key is equal to transaction amount for all months
                     categoryMonthSumById[transaction.category_id] = {}
                     categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
-                } else if (!(categoryMonthSumById[transaction.category_id][transaction.month] in categoryMonthSumById[transaction.category_id])){
+                } else if (!(categoryMonthSumById[transaction.category_id][transaction.month])){
                     categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
                 } else {
                     //category key is equal to transaction amount for all months
