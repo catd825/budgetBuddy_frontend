@@ -15,19 +15,28 @@ filterBudgetsByMonth = () => {
     return this.props.budgets.filter(budgetObj => {  
       if(this.state.month === budgetObj.month){  
         return budgetObj.month} else if (this.state.month === 0) { 
-          return budgetObj
-        }
+          return budgetObj}
             })
     }
 
+
+    // filterBudgetsByMonth = () => {
+    //     return this.props.budgets.filter(budgetObj => this.state.month === 0 ? budgetObj : budgetObj.month)
+    // }
+
+    // filterTransactionsByMonth = () => {
+    //     return this.props.transactions.filter(transObj => {  
+    //       if(this.state.month === transObj.month){ 
+    //         return transObj.month} else if (this.state.month === 0) { 
+    //           return transObj
+    //         }
+    //             })
+    //     }
+
+
     filterTransactionsByMonth = () => {
-        return this.props.transactions.filter(transObj => {  
-          if(this.state.month === transObj.month){ 
-            return transObj.month} else if (this.state.month === 0) { 
-              return transObj
-            }
-                })
-        }
+        return this.props.transactions.filter(transObj => this.state.month === transObj.month || this.state.month === 0 )
+    }
 
 categoryId = () => {
      return this.filterBudgetsByMonth().map(budget => {
@@ -60,9 +69,8 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
 }
 
     findTotalSpend = (categoryId, month) => {
-        console.log(categoryId)
+        // console.log(categoryId)
         const categorySumById = this.totalCategorySpend();
-
         
         if (categorySumById[categoryId]) {
             return categorySumById[categoryId][month]
@@ -72,9 +80,9 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
     }
 
     totalCategorySpend = () => {
-        if (this.props.transactions){
             const categoryMonthSumById = {}
-            this.filterTransactionsByMonth().map(transaction => {
+            console.log(111111, this.filterTransactionsByMonth())
+            this.filterTransactionsByMonth().forEach(transaction => {
                 // check if object has key of category_id; if not, create that and set to transactionObj amount
                 if (!(transaction.category_id in categoryMonthSumById)){
                     // category key is equal to transaction amount for all months
@@ -87,9 +95,8 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
                     categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
                 }
             })
-            console.log("total cat spend ", categoryMonthSumById)
+            console.log(22222, categoryMonthSumById)
             return categoryMonthSumById;
-        }
     }
 
 
@@ -147,8 +154,7 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
 
     render() {
 
-        
-
+        // console.log(this.filterTransactionsByMonth())
         return(
             <>
             {this.props.transactions === null || this.props.budgets === null || this.props.bank_accounts === null
