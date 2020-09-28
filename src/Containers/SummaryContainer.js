@@ -19,8 +19,7 @@ class SummaryContainer extends React.Component {
     
 
     componentDidMount () {
-        if(this.props.user){
-            
+        {
             const token = this.props.getToken()
             // this.fetchUsers(token)
             this.fetchBudgets(token)
@@ -244,13 +243,13 @@ class SummaryContainer extends React.Component {
 
     render () {
 
-        console.log("this.props.user", this.props.user.id)
-        console.log("this.state.transactions", this.state.transactions)
+        // console.log("this.props.user", this.props.user.id)
+        // console.log("this.state.transactions", this.state.transactions)
 
         return (
 
             <>
-            {this.props.user ? <> 
+             <> 
             <div>
             <Switch>
                 <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
@@ -258,11 +257,7 @@ class SummaryContainer extends React.Component {
                 <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} currentUser={this.props.user} />} />
             </Switch>
             </div>
-            </> : 
-                <>
-                <Redirect to="/signup" />
-                </>
-            }
+            </> 
         </>
 
         )

@@ -72,28 +72,24 @@ categoryId = () => {
     }
 
     totalCategorySpend = () => {
-        if (this.props.transactions){
-            const categoryMonthSumById = {}
-            this.filterTransactionsByMonth().map(transaction => {
-                // check if object has key of category_id; if not, create that and set to transactionObj amount
-                // debugger
-                if (!(transaction.category_id in categoryMonthSumById)){
-                    // category key is equal to transaction amount for all months
-                    categoryMonthSumById[transaction.category_id] = {}
-                    categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
-                } else if (!(categoryMonthSumById[transaction.category_id][transaction.month] in categoryMonthSumById[transaction.category_id])){
-                    categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
-                } else {
-                    //category key is equal to transaction amount for all months
-                    categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
-                }
-            })
-            console.log("total cat spend ", categoryMonthSumById)
-            // debugger
-            return categoryMonthSumById;
-        }
-    }
-
+        const categoryMonthSumById = {}
+        // console.log(111111, this.filterTransactionsByMonth())
+        this.filterTransactionsByMonth().forEach(transaction => {
+            // check if object has key of category_id; if not, create that and set to transactionObj amount
+            if (!(categoryMonthSumById[transaction.category_id])){
+                // category key is equal to transaction amount for all months
+                categoryMonthSumById[transaction.category_id] = {}
+                categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
+            } else if (!(categoryMonthSumById[transaction.category_id][transaction.month])){
+                categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
+            } else {
+                //category key is equal to transaction amount for all months
+                categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
+            }
+        })
+        // console.log(22222, categoryMonthSumById)
+        return categoryMonthSumById;
+}
 
 
 //populate table with category names

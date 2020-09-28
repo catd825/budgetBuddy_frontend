@@ -96,9 +96,9 @@ logOutHandler = () => {
     
   return (
     <>
-      <Navbar currentUser={this.state.user} />
+      <Navbar currentUser={this.state.user} clickHandler={this.logOutHandler}/>
       <Switch>
-        <Route path="/Login" render={(routerProps) => <Login clickHandler={this.logOutHandler} submitHandler={this.loginHandler} user={this.state.user} />}/> 
+        <Route path="/Login" render={(routerProps) => <Login submitHandler={this.loginHandler} user={this.state.user} />}/> 
         <Route path="/signup" render={(routerProps) => <Signup submitHandler={this.signUpHandler} />}/>
         <Route path="/" render={(routerProps) => <SummaryContainer user={this.state.user} getToken={this.getToken}/>}/>
         {/* <Route path="/transactions" render={(routerProps) => <TransactionContainer/>} />
