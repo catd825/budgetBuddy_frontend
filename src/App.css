@@ -39,7 +39,7 @@
 }
 
 .main-div {
-  width: 75%;
+  width: 100%;
   justify-content: center;
   align-items: center;
 }
@@ -57,9 +57,20 @@
 }
 
 .custom-select{
-  width: 75%
+  width: 25%
 }
 
 nav{
-  background-color: white
+  background-color: #F7C9B5;
+}
+
+.landing-page-div{
+  display:flex; 
+  flex-direction:row;
+}
+
+.summary-div {
+  width: 500px;
+  justify-content: center;
+  align-items: center;
 }

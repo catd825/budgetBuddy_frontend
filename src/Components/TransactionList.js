@@ -8,13 +8,13 @@ import TransactionFilter from './TransactionFilter'
 class TransactionList extends React.Component {
 
 
-  state = {month: 10,
+  state = {month: 0,
           searchValue:''
         }
 
 searchTransactions = () => {
   return this.props.transactions.filter(transObj => {
-      return transObj.description.toLowerCase().includes(this.state.searchValue.toLowerCase())
+      return transObj.description.toLowerCase().includes(this.state.searchValue.toLowerCase()) || transObj.category_name.toLowerCase().includes(this.state.searchValue.toLowerCase())
         })
   }
 

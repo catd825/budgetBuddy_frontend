@@ -102,41 +102,58 @@ data = () => {
 //     return data
 //     console.log(data)
 
+        //budget graph
+        // return this.props.projectedBudgets.map(budget => {
+        //    let data={}
+        //     data["name"] = budget.category_name
+        //     // console.log("month", data)
+        //     budget.trans_type === "Expense" ? data["expense"] = budget.amount : data["expense"] = 0
+        //     // budget.trans_type === "Income" ? data["income"] = Math.abs(budget.amount) : data["income"] = 0
+        //     console.log("amount", data)
+        //     return data
+        // })
+
+
 
         return this.props.projectedBudgets.map(budget => {
-           let data={}
-            data["name"] = budget.category_name
-            console.log("month", data)
-            budget.trans_type === "Expense" ? data["expense"] = budget.amount : data["expense"] = 0
-            // budget.trans_type === "Income" ? data["income"] = Math.abs(budget.amount) : data["income"] = 0
-            console.log("amount", data)
-            return data
-        })
+          let data={}
+           data["name"] = budget.category_name
+           // console.log("month", data)
+           budget.trans_type === "Expense" ? data["expense"] = budget.amount : data["expense"] = 0
+           // budget.trans_type === "Income" ? data["income"] = Math.abs(budget.amount) : data["income"] = 0
+          //  console.log("amount", data)
+           return data
+       })
 }
+
+
+
 
 
 
   static jsfiddleUrl = 'https://jsfiddle.net/alidingling/5br7g9d6/';
 
   render() {
+    console.log(this.props.data)
+    // console.log(this.data())
     return (
       <>
-      <h5>Monthly Budget Summary</h5>
+      
       <LineChart
-        width={1000}
+        width={900}
         height={400}
-        data={this.data()}
+        data={this.props.data}
         margin={{
           top: 20, right: 30, left: 20, bottom: 10,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" height={60} tick={<CustomizedAxisTick />} />
+        <XAxis dataKey="name" height={70} tick={<CustomizedAxisTick />} />
         <YAxis />
         <Tooltip />
-        {/* <Legend /> */}
-        <Line type="monotone" dataKey="expense" stroke="#8884d8" label={<CustomizedLabel />} />
-        {/* <Line type="monotone" dataKey="" stroke="#82ca9d" /> */}
+        <Legend />
+        <Line type="monotone" dataKey="budget" stroke="#8884d8" label={<CustomizedLabel />} />
+        <Line type="monotone" dataKey="transaction" stroke="#82ca9d" />
       </LineChart>
       </>
     );
