@@ -30,8 +30,10 @@ class Signup extends React.Component {
             <>
                 {/* {this.props.user === false ? */}
                 <>
-                <br/><br/><br/><br/><br/>
-                    <div className="formCenter">
+                <br/><br/><br/>
+                <h2>budgetBuddy</h2>
+                <br/><br/>
+                <div className="center">
                     
                         <Form onSubmit={event => this.submitHandler(event)} id="signup" style={{ width: "300px" }}>
                             
@@ -50,9 +52,6 @@ class Signup extends React.Component {
                                 <Input style={{ width: "300px" }} type="password" name="password" placeholder="password" value={this.state.password} onChange={this.changeHandler} />
                             </FormGroup>
                             
-
-
-
                             <Button type="submit" value="Login">Submit</Button><br/><br/>
 
                         </Form>

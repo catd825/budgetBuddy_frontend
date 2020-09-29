@@ -21,9 +21,9 @@ const NavBar = (props) => {
   const toggle = () => setIsOpen(!isOpen);
   console.log(props)
   return (
-    <div>
+    <div>q  
       <Navbar color="light" className="sticky" light expand="md">
-        <NavbarBrand href="/">finance app</NavbarBrand>
+        <NavbarBrand href="/">budgetBuddy</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -41,18 +41,22 @@ const NavBar = (props) => {
                 </NavLink>
               </NavItem>
 
-              <NavItem>
-                <NavLink tag={Link} to="/signup">
-                 Signup
-                </NavLink>
-              </NavItem>
+              {/* {props.currentUser ?  
+              null
+                : <>
+                <NavItem>
+                  <NavLink tag={Link} to="/signup">
+                   Signup
+                  </NavLink>
+                </NavItem>
+                </>} */}
 
-              <NavItem>
-                <NavLink tag={Link} onClick={props.clickHandler} to="/login">
-                 Logout
-                </NavLink>
-              </NavItem>
-
+                <NavItem>
+                  <NavLink tag={Link} onClick={props.clickHandler} to="/login">
+                   Logout
+                  </NavLink>
+                </NavItem>
+  
 
 
 

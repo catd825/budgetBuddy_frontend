@@ -7,7 +7,7 @@ import SummaryFilter from './SummaryFilter'
 
 class BudgetList extends React.Component {
 
-  state = {month: 0}
+  state = {month: 10}
 
   changeHandler = (e) => {
     this.setState({month: parseInt(e.target.value)})
@@ -17,7 +17,7 @@ class BudgetList extends React.Component {
     budgetList = () => {
         return this.filterBudgetsByMonth().map(budget => {
           if(budget.amount > 0){
-            return <BudgetItem key={budget.id} deleteHelper={this.props.deleteHelper} budgetObj={budget}/>
+            return <BudgetItem key={budget.id} editHandler={this.props.editHandler} deleteHelper={this.props.deleteHelper} budgetObj={budget}/>
           }
         })
     }

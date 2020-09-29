@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { withRouter} from 'react-router-dom'
+import EditModalForm from './EditModalForm.js'
 
 class BudgetItem extends React.Component {
     
@@ -22,7 +23,8 @@ class BudgetItem extends React.Component {
               <td>{this.props.budgetObj.month}</td>
               <td>{this.props.budgetObj.category_name}</td>
               <td>${this.props.budgetObj.amount}</td>
-              <td><Button onClick={this.routeChange}>Edit</Button></td>
+              <td><EditModalForm editHandler={this.props.editHandler} budgets={this.props.budgetObj} parentComponent="budgetList" buttonLabel="Edit"/></td>
+              {/* <td><Button onClick={this.routeChange}>Edit</Button></td> */}
               <td><Button color="danger" onClick={this.deleteHelper} >Delete</Button></td>
             </tr>
           </tbody> 

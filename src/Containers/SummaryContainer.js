@@ -135,8 +135,8 @@ class SummaryContainer extends React.Component {
         .then(revisedBudget => {    
           this.setState({
               budgets: [...newBudgetArray, revisedBudget]
-          })
-          this.props.history.push(`/budgets`)
+          }, () =>{this.props.history.push(`/budgets`)})
+ 
           })
       }
 
@@ -250,8 +250,8 @@ class SummaryContainer extends React.Component {
 
             <>
              <> 
-            <div>
-            <Switch>
+             <div className="App">
+            <Switch>   
                 <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
                 <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts} currentUser={this.props.user}/>} />
                 <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} currentUser={this.props.user} />} />

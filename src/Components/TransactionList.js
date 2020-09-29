@@ -1,20 +1,35 @@
 import React from 'react';
 import { withRouter} from 'react-router-dom'
 import TransactionItem from './TransactionItem';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
+import TransactionFilter from './TransactionFilter'
 
 class TransactionList extends React.Component {
 
 
-  state = {month: 0}
+  state = {month: 10,
+          searchValue:''
+        }
+
+searchTransactions = () => {
+  return this.props.transactions.filter(transObj => {
+      return transObj.description.toLowerCase().includes(this.state.searchValue.toLowerCase())
+        })
+  }
+
+  searchHandler = (e) => {
+    this.setState({searchValue: e.target.value})
+}
+
+        
 
   changeHandler = (e) => {
     this.setState({month: parseInt(e.target.value)})
 }  
 
 filterTransactionsByMonth = () => {
-  return this.props.transactions.filter(transObj => {  //iterate over transactions 
+  return this.searchTransactions().filter(transObj => {  //iterate over transactions 
     if(this.state.month === transObj.month){  //if the object's month matches the current month selected, return those transactions
       return transObj.month} else if (this.state.month === 0) {  //if the state is 0, return everything.
         return transObj
@@ -27,7 +42,7 @@ filterTransactionsByMonth = () => {
         return this.filterTransactionsByMonth().map(transObj=> <TransactionItem key={transObj.id} transObj={transObj}/>)
     }
 
-    transAmount = () => {
+    transTotal = () => {
       return this.filterTransactionsByMonth().map(transObj => {
           if(transObj.trans_type === "Expense"){
             return transObj.amount}
@@ -51,8 +66,9 @@ filterTransactionsByMonth = () => {
         return (
             <>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
+            <TransactionFilter searchHandler={this.searchHandler} searchValue={this.state.searchValue} />
             {/* <Button onClick={this.routeChange}>Create New Budget</Button> */}
-            <p>Total Transactions ${Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</p>
+            <p>Total Transactions ${Math.round(this.transTotal().reduce((a,b) => a+b, 0),2)}</p>
             <Table>
             <thead>
               <tr>

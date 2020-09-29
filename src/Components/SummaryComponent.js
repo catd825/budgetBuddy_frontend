@@ -1,10 +1,14 @@
 import React from 'react'
 import { Table } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
+import BudgetChart from './BudgetChart'
+
+
+
 
 class SummaryComponent extends React.Component {
 
-state={month: 0}
+state={month: 10}
 
 
 changeHandler = (e) => {
@@ -47,11 +51,12 @@ categoryId = () => {
     return (
         <>
             <tr>
-                <td>{category_id}</td>
+                {/* <td>{category_id}</td> */}
                 <td>{category_name}</td>
                 <td>${amount}</td> 
                 <td>${totalSpend}</td> 
-                <td>${variance}</td> 
+                <td>${variance}</td>
+                <td>{parseFloat(totalSpend/amount).toFixed(2)*100+"%"}</td>  
 
             </tr>
         </>
@@ -63,7 +68,6 @@ categoryId = () => {
         // console.log(categoryId)
         const categorySumById = this.totalCategorySpend();
 
-        
         if (categorySumById[categoryId]) {
             return categorySumById[categoryId][month]
         } else {
@@ -114,7 +118,7 @@ categoryId = () => {
     transAmount = () => {
         return this.filterTransactionsByMonth().map(transObj => {
             if(transObj.trans_type === "Expense"){
-            return transObj.amount}
+                return transObj.amount}
             else{
                 return 0
             }
@@ -152,13 +156,18 @@ categoryId = () => {
             
             ?
             "" :
-            <div className="homepage-div">
+            <div className="main-div">
             <br/> <br/> <br/>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
             <br/> <br/> <br/>
-            <h5>Earning Summary</h5>
+            {this.state.month ===0 ? "" : 
+            <>
+                <BudgetChart projectedBudgets={this.filterBudgetsByMonth()}/>
+            
+            <br/> <br/> <br/>
+            {/* <h5>Earning Summary</h5> */}
 
-            <Table>
+            {/* <Table>
                     <thead>
                     <tr>
                         <th>Category ID</th>
@@ -180,21 +189,19 @@ categoryId = () => {
                     </tr>
                     </tbody>
                 </Table>
-                <br/> <br/> <br/>
+                <br/> <br/> <br/> */}
 
-
-
-
-
+            
             <h5>Spending Summary</h5>
                 <Table>
                     <thead>
                     <tr>
-                        <th>Category ID</th>
+                        {/* <th>Category ID</th> */}
                         <th>Category Name</th>
                         <th>Expense Budget</th> 
                         <th>Spend by Category Amount</th>
                         <th>Variance</th>
+                        <th>% through</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -203,16 +210,20 @@ categoryId = () => {
                     {this.categoryId() || null}
                     <tr>
                         <td>Grand Total</td>
-                        <td></td>
+                        {/* <td></td> */}
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
                         <td>${Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+                        <td>{parseFloat(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)/this.budgetAmount().reduce((a,b) => a+b, 0)).toFixed(2)*100+"%"}</td>
                         
                     </tr>
                     </tbody>
                 </Table>
-
+                </>
+                 }   
+                
             </div>
+
             }
             </>
         )

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, withRouter} from 'react-router-dom'
 import BudgetList from '../Components/BudgetList'
-import BudgetEdit from '../Components/BudgetEditForm'
+import BudgetEditForm from '../Components/BudgetEditForm'
 import BudgetCreate from '../Components/BudgetCreate'
 
 
@@ -9,7 +9,6 @@ class BudgetContainer extends React.Component {
 
 
     render () {
-        console.log("current user", this.props)
         return (
             <>
                 {this.props.budgets === null || this.props.users === null || this.props.categories === null
@@ -22,11 +21,11 @@ class BudgetContainer extends React.Component {
                             let id = parseInt(match.params.id)
                             let foundBudget = this.props.budgets.find((budget) => budget.id ===id)
                             return (
-                                foundBudget ? <BudgetEdit budgets={foundBudget} editHandler={this.props.editHandler} /> : <h3>Not Found</h3>
+                                foundBudget ? <BudgetEditForm budgets={foundBudget} editHandler={this.props.editHandler} /> : <h3>Not Found</h3>
                             )
                         }}/>
                         <Route exact path="/budgets/new" render={() => <BudgetCreate submitHandler={this.props.submitHandler} currentUser={this.props.currentUser} categories={this.props.categories} budgets={this.props.budgets} />} />
-                        <Route exact path="/budgets" render={() => <BudgetList deleteHelper={this.props.deleteHelper} budgets={this.props.budgets} />} />
+                        <Route exact path="/budgets" render={() => <BudgetList editHandler={this.props.editHandler} deleteHelper={this.props.deleteHelper} budgets={this.props.budgets} />} />
                     </Switch>
                     </>
                 }

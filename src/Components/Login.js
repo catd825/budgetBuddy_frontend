@@ -39,8 +39,12 @@ class Login extends React.Component {
             <>
                 {/* {this.props.user === false ? */}
                 <>
-                <br/><br/><br/><br/><br/>
-                    <div className="formCenter">
+                
+                <br/><br/><br/>
+                <h2>budgetBuddy</h2>
+                <br/><br/>
+                
+                <div className="center">
                     
                         <Form onSubmit={event => this.submitHandler(event)} id="signup" style={{ width: "300px" }}>
 

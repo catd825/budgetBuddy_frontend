@@ -96,7 +96,8 @@ logOutHandler = () => {
     
   return (
     <>
-      <Navbar currentUser={this.state.user} clickHandler={this.logOutHandler}/>
+    {this.state.user ? <Navbar currentUser={this.state.user} clickHandler={this.logOutHandler}/> : "" }
+      <div className="App">
       <Switch>
         <Route path="/Login" render={(routerProps) => <Login submitHandler={this.loginHandler} user={this.state.user} />}/> 
         <Route path="/signup" render={(routerProps) => <Signup submitHandler={this.signUpHandler} />}/>
@@ -104,6 +105,7 @@ logOutHandler = () => {
         {/* <Route path="/transactions" render={(routerProps) => <TransactionContainer/>} />
         <Route path="/budgets" render={(routerProps) => <BudgetContainer/>} /> */}
       </Switch>
+      </div>
     </>
   );
 }
