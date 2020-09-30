@@ -8,7 +8,9 @@ import BarChart from './BarChart'
 
 class SummaryComponent extends React.Component {
 
-state={month: 10}
+state={month: 9}
+
+
 
 
 changeHandler = (e) => {
@@ -79,15 +81,15 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
     if(trans_type ==="Expense" && absValue > 0){
         let object={}
         object["name"]=category_name || 0
-        console.log("totalspend", category_name)
+        // console.log("totalspend", category_name)
 
         object["transaction"]=Math.abs(totalSpend) || 0
-        console.log("totalspend", totalSpend)
+        // console.log("totalspend", totalSpend)
 
         object["budget"]=amount|| 0
-        console.log("totalspend", amount)
+        // console.log("totalspend", amount)
 
-        console.log(object)
+        // console.log(object)
         return object 
     }
 
@@ -183,6 +185,13 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
         })
     }
 
+    chooseMonth=() => {
+        let  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let d = this.state.month - 1
+        let monthName = months[d]
+        return monthName
+    }
+
 //array of transaction objects - this can be cleaned up
     actualIncome = () => {
         return this.filterTransactionsByMonth().map(transObj => {
@@ -208,7 +217,7 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
             <br/> <br/> <br/>
             {this.state.month ===0 ? "" : 
             <>
-            <h5>Monthly Budget Summary</h5>
+            <h5>Monthly Budget Summary {this.chooseMonth()}</h5>
             <div className="landing-page-div">
 
                 <BarChart data={this.chartId()} projectedBudgets={this.filterBudgetsByMonth()}/>
@@ -222,8 +231,8 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
                     <p>Remaining for the month: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</p>
                 <p>{
                     this.actualIncome().reduce((a,b) => a+b, 0) - this.budgetAmount().reduce((a,b) => a+b, 0) > Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)) ?
-                    ""
-                    : ""
+                        ""
+                        : ""
                     }
 
                 </p>

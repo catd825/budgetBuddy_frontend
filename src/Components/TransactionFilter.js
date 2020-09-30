@@ -7,7 +7,7 @@ class TransactionFilter extends React.Component {
         return(
             <div id="search" style={{ width: "500px" }}>
                 <form id="searchForm">
-                    <Input type="text" placeholder="search by description" value={this.props.searchValue} onChange={this.props.searchHandler} />
+                    <Input type="text" placeholder="search by description or category" value={this.props.searchValue} onChange={this.props.searchHandler} />
                 </form>
             </div>
         )

@@ -44,16 +44,19 @@ class TransactionEdit extends React.Component {
 
     
     render() {
-        console.log(this.props)
-        console.log(this.mapCategories())
+        // console.log(this.props)
+        // console.log(this.mapCategories())
         return(
             <>
+            <br/><br/><br/><br/>
+            <h2>Edit Transaction Category</h2>
             <Form onSubmit={this.editHelper}>
             <p>Date: {this.props.transObj.date}</p>
             <p>Description: {this.props.transObj.description}</p>
 
             <FormGroup>
-                <Label for="exampleCustomSelect">Select Budget Month</Label>
+                <Label for="exampleCustomSelect">Select New Category</Label>
+                <br/>
                 <CustomInput name="category_name" type="select" onChange={this.changeHelper}>
                 <option>Select Category</option>
                         {this.mapCategories()}

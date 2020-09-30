@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import BudgetCreate from'./BudgetCreate'
 
-const ModalForm = (props) => {
+const CreateModalForm = (props) => {
   const {
     buttonLabel,
     className
@@ -27,4 +27,4 @@ const ModalForm = (props) => {
   );
 }
 
-export default ModalForm;
+export default CreateModalForm;

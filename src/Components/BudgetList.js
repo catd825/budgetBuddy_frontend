@@ -8,7 +8,7 @@ import CreateModalForm from './CreateModalForm'
 
 class BudgetList extends React.Component {
 
-  state = {month: 10}
+  state = {month: 9}
 
   changeHandler = (e) => {
     this.setState({month: parseInt(e.target.value)})
