@@ -39,7 +39,7 @@ filterTransactionsByMonth = () => {
 
 
     transList = () => {
-        return this.filterTransactionsByMonth().map(transObj=> <TransactionItem key={transObj.id} transObj={transObj}/>)
+        return this.filterTransactionsByMonth().map(transObj=> <TransactionItem editHandler={this.props.editHandler} key={transObj.id} categories={this.props.categories} transactions={transObj}/>)
     }
 
     transTotal = () => {

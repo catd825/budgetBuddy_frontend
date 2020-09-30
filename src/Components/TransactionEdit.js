@@ -5,15 +5,15 @@ class TransactionEdit extends React.Component {
     
     state={
         
-        id: this.props.transObj.id || 0,
-        category_id: this.props.transObj.category_id || 0,
-        bank_account_id: this.props.transObj.bank_account_id || 0,
-        date: this.props.transObj.date || '',
-        amount: this.props.transObj.amount || 0,
-        trans_type: this.props.transObj.trans_type || '',
-        description: this.props.transObj.description || '',
-        category_name: this.props.transObj.category_name || '',
-        month: this.props.transObj.month || 0
+        id: this.props.transactions.id || 0,
+        category_id: this.props.transactions.category_id || 0,
+        bank_account_id: this.props.transactions.bank_account_id || 0,
+        date: this.props.transactions.date || '',
+        amount: this.props.transactions.amount || 0,
+        trans_type: this.props.transactions.trans_type || '',
+        description: this.props.transactions.description || '',
+        category_name: this.props.transactions.category_name || '',
+        month: this.props.transactions.month || 0
 
     }
 
@@ -51,8 +51,8 @@ class TransactionEdit extends React.Component {
             <br/><br/><br/><br/>
             <h2>Edit Transaction Category</h2>
             <Form onSubmit={this.editHelper}>
-            <p>Date: {this.props.transObj.date}</p>
-            <p>Description: {this.props.transObj.description}</p>
+            <p>Date: {this.props.transactions.date}</p>
+            <p>Description: {this.props.transactions.description}</p>
 
             <FormGroup>
                 <Label for="exampleCustomSelect">Select New Category</Label>
@@ -63,7 +63,7 @@ class TransactionEdit extends React.Component {
                 </CustomInput>
             </FormGroup>
 
-            <p>Amount: ${this.props.transObj.amount}</p>
+            <p>Amount: ${this.props.transactions.amount}</p>
 
             <Input type="submit"></Input>
 
