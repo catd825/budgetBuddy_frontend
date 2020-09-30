@@ -114,8 +114,9 @@ class SummaryContainer extends React.Component {
 
 
     editBudgetHandler = (budgetObj) => {
-        console.log(budgetObj)
+        // console.log(budgetObj)
         let id = budgetObj.id
+        
         let budgetArray = [...this.state.budgets]
         let newBudgetArray = budgetArray.filter(budget => budget.id !== id)
         const token = this.props.getToken() 
@@ -132,12 +133,15 @@ class SummaryContainer extends React.Component {
       
         fetch(`http://localhost:3000/user_categories/${id}`, configObj)
         .then(response => response.json())
-        .then(revisedBudget => {    
+        .then(
+            revisedBudget => {    
+
           this.setState({
-              budgets: [...newBudgetArray, revisedBudget]
+              budgets: [...newBudgetArray, budgetObj]
           }, () =>{this.props.history.push(`/budgets`)})
  
-          })
+          }
+          )
       }
 
       createBudgetHandler = (obj) => {

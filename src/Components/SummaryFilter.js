@@ -10,7 +10,6 @@ class SummaryFilter extends React.Component {
                 <Label for="exampleCustomSelect">View Summary by Month</Label>
                 <br/>
                 <CustomInput type="select" onChange={this.props.changeHandler}>
-                    <option value="10">October</option>
                     <option value="">Select</option>
                     <option value="0">All</option>
                     <option value="1">January</option>

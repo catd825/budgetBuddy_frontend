@@ -19,7 +19,6 @@ const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-  console.log(props)
   return (
     <div>q  
       <Navbar color="light" className="sticky" light expand="md">

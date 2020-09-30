@@ -9,6 +9,7 @@ class BudgetContainer extends React.Component {
 
 
     render () {
+        console.log(this.props)
         return (
             <>
                 {this.props.budgets === null || this.props.users === null || this.props.categories === null
@@ -24,8 +25,8 @@ class BudgetContainer extends React.Component {
                                 foundBudget ? <BudgetEditForm budgets={foundBudget} editHandler={this.props.editHandler} /> : <h3>Not Found</h3>
                             )
                         }}/>
-                        <Route exact path="/budgets/new" render={() => <BudgetCreate submitHandler={this.props.submitHandler} currentUser={this.props.currentUser} categories={this.props.categories} budgets={this.props.budgets} />} />
-                        <Route exact path="/budgets" render={() => <BudgetList editHandler={this.props.editHandler} deleteHelper={this.props.deleteHelper} budgets={this.props.budgets} />} />
+                        <Route exact path="/budgets/new" render={() => <BudgetCreate currentUser={this.props.currentUser} submitHandler={this.props.submitHandler} currentUser={this.props.currentUser} categories={this.props.categories} budgets={this.props.budgets} />} />
+                        <Route exact path="/budgets" render={() => <BudgetList currentUser={this.props.currentUser} submitHandler={this.props.submitHandler} editHandler={this.props.editHandler} categories={this.props.categories} deleteHelper={this.props.deleteHelper} budgets={this.props.budgets} />} />
                     </Switch>
                     </>
                 }

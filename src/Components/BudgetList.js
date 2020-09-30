@@ -3,6 +3,7 @@ import BudgetItem from './BudgetItem'
 import { withRouter} from 'react-router-dom'
 import { Table, Button } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
+import CreateModalForm from './CreateModalForm'
 
 
 class BudgetList extends React.Component {
@@ -39,11 +40,13 @@ class BudgetList extends React.Component {
     }
     
     render() {
+      console.log(this.props)
         return(
             <>
             <>
-              <br/><br/>      
-                    <Button onClick={this.routeChange}>Create New Budget</Button>
+              <br/><br/>
+                <CreateModalForm currentUser={this.props.currentUser} submitHandler={this.props.submitHandler} budgets={this.props.budgets} categories={this.props.categories} parentComponent="budgetContainer" buttonLabel="Create a New Budget"/>      
+                  {/* <Button onClick={this.routeChange}>Create New Budget</Button> */}
                 <br/><br/>  
                 <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
                 <br/><br/>  

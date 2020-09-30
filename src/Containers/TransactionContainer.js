@@ -15,7 +15,6 @@ class TransactionContainer extends React.Component {
                     ""
                 :
                 <>
-                <h1>transaction container</h1>
                     <Switch> 
                     <Route exact path="/transactions/:id/edit" render={({match})=> {
                             let id = parseInt(match.params.id)
