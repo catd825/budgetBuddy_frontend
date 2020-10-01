@@ -1,10 +1,14 @@
 import React from 'react'
-import { Table } from 'reactstrap';
+import { Table, ListGroup, ListGroupItem } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
+import BarChart from './BarChart'
+
+
+
 
 class SummaryComponent extends React.Component {
 
-state={month: 0}
+state={month: 10}
 
 
 changeHandler = (e) => {
@@ -45,22 +49,21 @@ categoryId = () => {
  }
 
 
-
-renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
+ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
     let totalSpend = Math.round(this.findTotalSpend(category_id, month),2) || 0
     let variance = Math.round((amount + this.findTotalSpend(category_id, month)), 2)
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
     
     if(trans_type ==="Expense" && absValue>0){
-    
     return (
         <>
             <tr>
-                <td>{category_id}</td>
                 <td>{category_name}</td>
                 <td>${amount}</td> 
-                <td>${totalSpend}</td> 
-                <td>${variance}</td> 
+                <td>${Math.abs(totalSpend)}</td> 
+                <td>${Math.abs(variance)}</td>
+                <td>{amount === 0 ? 0+"%" :
+                Math.abs(parseFloat(totalSpend/amount)).toFixed(2)*100+"%"}</td>  
 
             </tr>
         </>
@@ -68,36 +71,56 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
     }
 }
 
+chartId = () => {
+    return this.filterBudgetsByMonth().map(budget => {
+            return this.renderChartData(budget)
+    })
+}
+
+renderChartData = ({ category_id, category_name, amount, trans_type, month}) => {
+    let totalSpend = Math.round(this.findTotalSpend(category_id, month),2) || 0
+    let absValue = Math.abs(amount) + Math.abs(totalSpend)
+    
+    
+    if(trans_type ==="Expense" && absValue > 0){
+        let object={}
+        object["name"]=category_name || 0
+        object["transaction"]=Math.abs(totalSpend) || 0
+        object["budget"]=amount|| 0
+        return object 
+    }
+
+}
+
     findTotalSpend = (categoryId, month) => {
-        // console.log(categoryId)
         const categorySumById = this.totalCategorySpend();
-        
+
         if (categorySumById[categoryId]) {
             return categorySumById[categoryId][month]
-        } else {
-            return 0
+
+        } else if (!categorySumById[categoryId]){
+            return null
         }
+        
     }
 
     totalCategorySpend = () => {
-            const categoryMonthSumById = {}
-            console.log(111111, this.filterTransactionsByMonth())
-            this.filterTransactionsByMonth().forEach(transaction => {
-                // check if object has key of category_id; if not, create that and set to transactionObj amount
-                if (!(categoryMonthSumById[transaction.category_id])){
-                    // category key is equal to transaction amount for all months
-                    categoryMonthSumById[transaction.category_id] = {}
-                    categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
-                } else if (!(categoryMonthSumById[transaction.category_id][transaction.month])){
-                    categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
-                } else {
-                    //category key is equal to transaction amount for all months
-                    categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
-                }
-            })
-            console.log(22222, categoryMonthSumById)
-            return categoryMonthSumById;
-    }
+        const categoryMonthSumById = {}
+        this.filterTransactionsByMonth().forEach(transaction => {
+            // check if object has key of category_id; if not, create that and set to transactionObj amount
+            if (!(categoryMonthSumById[transaction.category_id])){
+                // category key is equal to transaction amount for all months
+                categoryMonthSumById[transaction.category_id] = {}
+                categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
+            } else if (!(categoryMonthSumById[transaction.category_id][transaction.month])){
+                categoryMonthSumById[transaction.category_id][transaction.month] = transaction.amount
+            } else {
+                //category key is equal to transaction amount for all months
+                categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
+            }
+        })
+        return categoryMonthSumById;
+}
 
 
 //populate table with category names
@@ -122,7 +145,7 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
     transAmount = () => {
         return this.filterTransactionsByMonth().map(transObj => {
             if(transObj.trans_type === "Expense"){
-            return transObj.amount}
+                return transObj.amount}
             else{
                 return 0
             }
@@ -131,7 +154,6 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
 
 
     projectedIncome = () => {
-        // return this.props.budgets.map(budget => {
         return this.filterBudgetsByMonth().map(budget => {
             if(budget.trans_type ==="Income" || budget.amount < 0){
                 return budget.amount}
@@ -139,6 +161,13 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
                 return 0
             }
         })
+    }
+
+    chooseMonth=() => {
+        let  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let d = this.state.month - 1
+        let monthName = months[d]
+        return monthName
     }
 
 //array of transaction objects - this can be cleaned up
@@ -154,56 +183,46 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
 
     render() {
 
-        // console.log(this.filterTransactionsByMonth())
         return(
             <>
             {this.props.transactions === null || this.props.budgets === null || this.props.bank_accounts === null
             
             ?
             "" :
-            <div className="homepage-div">
+            <div className="main-div">
             <br/> <br/> <br/>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
             <br/> <br/> <br/>
-            <h5>Earning Summary</h5>
+            {this.state.month ===0 ? "" : 
+            <>
+            <h5>Monthly Budget Summary {this.chooseMonth()}</h5>
+            <div className="landing-page-div">
 
-            <Table>
-                    <thead>
-                    <tr>
-                        <th>Category ID</th>
-                        <th>Category Name</th>
-                        <th>Projected Income</th> 
-                        <th>Actual Income</th>
-                        <th>Variance</th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>Income</td>
-                        <td>${this.projectedIncome().reduce((a,b) => a+b, 0)}</td>
-                        <td>${this.actualIncome().reduce((a,b) => a+b, 0)}</td>
-                        <td>${this.projectedIncome().reduce((a,b) => a+b, 0) + this.actualIncome().reduce((a,b) => a+b, 0)}</td>
-                    </tr>
-                    </tbody>
-                </Table>
-                <br/> <br/> <br/>
-
-
-
-
-
+                <BarChart data={this.chartId()} projectedBudgets={this.filterBudgetsByMonth()}/>
+                <div className="summary-div"><h3></h3>
+                <ListGroup>
+                    <ListGroupItem><h5><b>Summary</b></h5></ListGroupItem>
+                    <ListGroupItem>Expected Earnings: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0))}</ListGroupItem>
+                    <ListGroupItem>Expected to Spend: ${this.budgetAmount().reduce((a,b) => a+b, 0)}</ListGroupItem>
+                    <ListGroupItem>Savings goal: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0)) - this.budgetAmount().reduce((a,b) => a+b, 0)}</ListGroupItem>
+                    <ListGroupItem>Actual Earnings: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0))}</ListGroupItem>
+                    <ListGroupItem>Spent to date: ${Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</ListGroupItem>
+                    <ListGroupItem>Remaining for the month: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</ListGroupItem>
+                </ListGroup>
+            
+                </div>
+            </div>
+            <br/>
+            
             <h5>Spending Summary</h5>
                 <Table>
                     <thead>
                     <tr>
-                        <th>Category ID</th>
                         <th>Category Name</th>
                         <th>Expense Budget</th> 
                         <th>Spend by Category Amount</th>
                         <th>Variance</th>
+                        <th>% through</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -212,16 +231,19 @@ renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
                     {this.categoryId() || null}
                     <tr>
                         <td>Grand Total</td>
-                        <td></td>
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
-                        <td>${Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+                        <td>${Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</td>
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>
+                        <td>{parseFloat(Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)/this.budgetAmount().reduce((a,b) => a+b, 0))).toFixed(2)*100+"%"}</td>
                         
                     </tr>
                     </tbody>
                 </Table>
-
+                </>
+                 }   
+                
             </div>
+
             }
             </>
         )

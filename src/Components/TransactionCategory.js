@@ -3,7 +3,6 @@ import React from 'react';
 class TransactionCategory extends React.Component {
 
     render() {
-        // console.log("transaction category", this.props)
 
         return (
             <li>

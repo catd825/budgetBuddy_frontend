@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch, withRouter} from 'react-router-dom'
 import TransactionList from '../Components/TransactionList'
 import TransactionEdit from '../Components/TransactionEdit'
+import TransactionCreate from '../Components/TransactionCreate'
 
 class TransactionContainer extends React.Component {
 
@@ -13,17 +14,15 @@ class TransactionContainer extends React.Component {
                     ""
                 :
                 <>
-                <h1>transaction container</h1>
                     <Switch> 
                     <Route exact path="/transactions/:id/edit" render={({match})=> {
                             let id = parseInt(match.params.id)
                             let foundTrans = this.props.transactions.find((trans) => trans.id ===id)
                             return (
-                                foundTrans ? <TransactionEdit transObj={foundTrans} categories={this.props.categories} editHandler={this.props.editHandler} /> : <h3>Not Found</h3>
+                                foundTrans ? <TransactionEdit transactions={foundTrans} categories={this.props.categories} editHandler={this.props.editHandler} /> : <h3>Not Found</h3>
                             )
                         }}/>
-                        <Route exact path="/transactions" render={() => <TransactionList transactions={this.props.transactions}/>} />
-                        {/* <Route component={NotFound} /> */}
+                        <Route exact path="/transactions" render={() => <TransactionList editHandler={this.props.editHandler} categories={this.props.categories} transactions={this.props.transactions}/>} />
                     </Switch>
                     </>
                 }

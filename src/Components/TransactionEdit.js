@@ -5,15 +5,17 @@ class TransactionEdit extends React.Component {
     
     state={
         
-        id: this.props.transObj.id || 0,
-        category_id: this.props.transObj.category_id || 0,
-        bank_account_id: this.props.transObj.bank_account_id || 0,
-        date: this.props.transObj.date || '',
-        amount: this.props.transObj.amount || 0,
-        trans_type: this.props.transObj.trans_type || '',
-        description: this.props.transObj.description || '',
-        category_name: this.props.transObj.category_name || '',
-        month: this.props.transObj.month || 0
+        id: this.props.transactions.id || 0,
+        user_id: this.props.transactions.user_id || 0,
+        category_id: this.props.transactions.category_id || 0,
+        bank_account_id: this.props.transactions.bank_account_id || 0,
+        date: this.props.transactions.date || '',
+        amount: this.props.transactions.amount || 0,
+        trans_type: this.props.transactions.trans_type || '',
+        description: this.props.transactions.description || '',
+        category_name: this.props.transactions.category_name || '',
+        month: this.props.transactions.month || 0
+
     }
 
 
@@ -35,7 +37,6 @@ class TransactionEdit extends React.Component {
         if (this.props.categories){
             let category_name = ""
             return this.props.categories.map(category => {
-                // return category_name = category.name
                 return <option>{category_name = category.name}</option>
             }) 
         } 
@@ -43,22 +44,24 @@ class TransactionEdit extends React.Component {
 
     
     render() {
-        console.log(this.props)
         return(
             <>
+            <br/>
+            <h2>Edit Transaction Category</h2>
             <Form onSubmit={this.editHelper}>
-            <p>Date: {this.props.transObj.date}</p>
-            <p>Description: {this.props.transObj.description}</p>
+            <p>Date: {this.props.transactions.date}</p>
+            <p>Description: {this.props.transactions.description}</p>
 
             <FormGroup>
-                <Label for="exampleCustomSelect">Select Budget Month</Label>
-                <CustomInput name="category_name" type="select" onChange={this.changeHelper}>
+                <Label for="exampleCustomSelect"></Label>
+                <br/>
+                <CustomInput style={{ width: "300px" }} name="category_name" type="select" onChange={this.changeHelper}>
                 <option>Select Category</option>
                         {this.mapCategories()}
                 </CustomInput>
             </FormGroup>
 
-            <p>Amount: ${this.props.transObj.amount}</p>
+            <p>Amount: ${this.props.transactions.amount}</p>
 
             <Input type="submit"></Input>
 

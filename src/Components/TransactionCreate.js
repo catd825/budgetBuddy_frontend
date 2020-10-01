@@ -2,14 +2,14 @@ import React from 'react'
 import { Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 
 
-class BudgetCreate extends React.Component {
+class TransactionCreate extends React.Component {
     state = {
-        user_id: this.props.currentUser.id,
+        bank_account_id: 0,
         category_id: "",
         amount: 0,
         category_name: "",
-        user_name: this.props.currentUser.name,
-        trans_type: "Expense",
+        description: "",
+        trans_type: "",
         month: 0
     }
 
@@ -25,51 +25,26 @@ class BudgetCreate extends React.Component {
         })
     }
 
-//shows currently used categories for current Month
-    currentUserCategories = () => {
-        if(this.props.budgets) {
-            return this.props.budgets.map(budget => {
-                if(budget.amount !== 0 && budget.month === parseInt(this.state.month)){
-                return budget.category_name
-                }
-            })                   
-        }
-    }
-
 
     //maps out all categories 
     mapCategories = () => {
         if (this.props.categories){
             return this.props.categories.map(category => {
-                return category.name
+                return <option>{category.name}</option>
             }) 
         } 
     }
 
-//allows user to only select categories not currently used
-    showCategories = () => {
-        let current = this.currentUserCategories(); //all categories the user has assigned for current month
-        let all = this.mapCategories(); //all categories in database for month
-        let revised = new Set(current); //create new set
-        console.log(revised)
-        let unused = [...new Set([...all].filter(x => !revised.has(x)))] //filter out categories that havent been assigned
-        
-        //map into array into selection dropdown
-        return unused.map(category => {
-            console.log(category)
-            return <option>{category}</option>
-        })
-    }
     
 
     render() {
-        console.log(this.props)
+        console.log(this.props.bank_accounts)
 
         return(
             <>
             {this.props.budgets === null ? "" : 
             <>
-                <h2>Create New Category Budget</h2>
+                <h2>Create New Transaction</h2>
                 <Form onSubmit={this.submitHelper}>
                     
                 <FormGroup>
@@ -95,13 +70,18 @@ class BudgetCreate extends React.Component {
                     <Label for="category_name">Select</Label>
                         <Input type="select" name="category_name" onChange={this.changeHelper} value={this.state.category_name}>
                         <option>Select Category</option>
-                        {this.showCategories()}
+                        {this.mapCategories()}
                         </Input>
                 </FormGroup>
 
                 <FormGroup>
-                    <Label style={{fontSize:"1rem"}} for="amount">How much would you like to budget?</Label>
+                    <Label style={{fontSize:"1rem"}} for="amount">How much did you spend?</Label>
                     <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
+                </FormGroup>
+
+                <FormGroup>
+                    <Label style={{fontSize:"1rem"}} for="amount">Please give a brief description of the cost</Label>
+                    <Input onChange={this.changeHelper} type="text" name="description" value={this.state.description} />
                 </FormGroup>
 
                     <Input type="submit"></Input>
@@ -118,4 +98,4 @@ class BudgetCreate extends React.Component {
 
 
 
-export default BudgetCreate
+export default TransactionCreate

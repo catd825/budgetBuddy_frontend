@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 class BudgetEditForm extends React.Component {
@@ -40,25 +40,6 @@ class BudgetEditForm extends React.Component {
                     <Label style={{fontSize:"1rem"}} for="amount">{this.props.budgets.category_name}</Label>
                     <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
                 </FormGroup>
-
-                {/* <FormGroup>
-                <Label for="exampleCustomSelect">Select Budget Month</Label>
-                <CustomInput name="month" type="select" value={this.state.month} onChange={this.changeHelper}>
-                    <option value="">Select</option>
-                    <option value="1">January</option>
-                    <option value="2">February</option>
-                    <option value="3">March</option>
-                    <option value="4">April</option>
-                    <option value="5">May</option>
-                    <option value="6">June</option>
-                    <option value="7">July</option>
-                    <option value="8">August</option>
-                    <option value="9">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </CustomInput>
-            </FormGroup> */}
 
                     <Input type="submit"></Input>
                 </Form>

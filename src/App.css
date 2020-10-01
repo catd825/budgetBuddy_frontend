@@ -1,5 +1,11 @@
+body {
+  font-family: Georgia
+}
+
+
 .App {
   text-align: center;
+
 }
 
 .App-logo {
@@ -37,9 +43,8 @@
   }
 }
 
-
-.homepage-div {
-  width: 75%;
+.main-div {
+  width: 100%;
   justify-content: center;
   align-items: center;
 }
@@ -48,4 +53,34 @@
   position: fixed;
   top: 0;
   width: 100%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-select{
+  width: 500px
+}
+
+.landing-page-div{
+  display:flex; 
+  flex-direction:row;
+}
+
+.summary-div {
+  width: 500px;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 25px 0px 0px;
+}
+
+
+div #search{
+  width:50%;
+  justify-content: center;
+  align-items: center;
 }

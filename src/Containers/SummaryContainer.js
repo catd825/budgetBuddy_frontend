@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter} from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import TransactionContainer from './TransactionContainer'
 import BudgetContainer from './BudgetContainer'
 // import BankAccountContainer from './BankAccountContainer'
@@ -14,52 +14,95 @@ class SummaryContainer extends React.Component {
         budgets: null,
         transactions: null,
         bank_accounts: null,
-        categories: null,
-        users: null
+        categories: null
     }
     
-    fetchBudgets = () => {
-        fetch("http://localhost:3000/user_categories")
+
+    componentDidMount () {
+        {
+            const token = this.props.getToken()
+            // this.fetchUsers(token)
+            this.fetchBudgets(token)
+            this.fetchBankAccounts(token)
+            this.fetchCategories(token)
+            this.fetchTransactions(token)
+        }
+    }
+
+
+    fetchBudgets = (token) => {
+        // const token = this.props.getToken()
+        
+        fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/user_categories`, {
+            method: "GET",
+            headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
         .then(response => response.json())
         .then(retrievedBudgets => {
+            // debugger
             this.setState({
-                budgets : [...retrievedBudgets],
+                budgets : [...retrievedBudgets]
             })
         })
     }
 
-    fetchTransactions = () => {
-        fetch("http://localhost:3000/transactions")
+    fetchTransactions = (token) => {
+        // const token = this.props.getToken()
+        fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/transactions`, {
+            method: "GET",
+            headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
         .then(response => response.json())
         .then(retrievedTransactions => {
             this.setState({
-                transactions : [...retrievedTransactions],
+                transactions : [...retrievedTransactions]
             })
         })
     }
 
-    fetchBankAccounts = () => {
-        fetch("http://localhost:3000/bank_accounts")
+    fetchBankAccounts = (token) => {
+        // const token = this.props.getToken()
+        fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/bank_accounts`, {
+            method: "GET",
+            headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
         .then(response => response.json())
         .then(retrievedAccounts => {
             this.setState({
-                bank_accounts : [...retrievedAccounts],
+                bank_accounts : [...retrievedAccounts]
             })
         })
     }
 
-    fetchCategories = () => {
-        fetch("http://localhost:3000/categories")
+    fetchCategories = (token) => {
+        // const token = this.props.getToken()
+        fetch(`http://localhost:3000/categories`, {
+            method: "GET",
+            headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
         .then(response => response.json())
         .then(retrievedCategories => {
             this.setState({
-                categories : [...retrievedCategories],
-            })
+                categories : [...retrievedCategories]
+            }, ()=> console.log("fetch categories"))
         })
     }
 
-    fetchUsers = () => {
-        fetch("http://localhost:3000/users")
+    fetchUsers = (token) => {
+        fetch("http://localhost:3000/api/v1/users", {
+            method: "GET",
+            headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
         .then(response => response.json())
         .then(retrievedUsers => {
             this.setState({
@@ -71,14 +114,16 @@ class SummaryContainer extends React.Component {
 
 
     editBudgetHandler = (budgetObj) => {
-        console.log(budgetObj)
         let id = budgetObj.id
+        
         let budgetArray = [...this.state.budgets]
         let newBudgetArray = budgetArray.filter(budget => budget.id !== id)
+        const token = this.props.getToken() 
       
         const configObj = {
           method: 'PATCH',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
@@ -87,22 +132,25 @@ class SummaryContainer extends React.Component {
       
         fetch(`http://localhost:3000/user_categories/${id}`, configObj)
         .then(response => response.json())
-        .then(revisedBudget => {    
+        .then(
+            revisedBudget => {    
           this.setState({
-              budgets: [...newBudgetArray, revisedBudget]
-          })
-          this.props.history.push(`/budgets`)
-          })
+              budgets: [...newBudgetArray, budgetObj]
+          }, () =>{this.props.history.push(`/budgets`)})
+ 
+          }
+          )
       }
 
       createBudgetHandler = (obj) => {
           let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
-        //   let month = new Date(obj.date).getMonth() + 1
           let newBudgetObj = {...obj, category_id: find_category_obj.id}
 
+        const token = this.props.getToken()  
         const configObj = {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
@@ -119,21 +167,27 @@ class SummaryContainer extends React.Component {
             })
         }
 
+
         editTransactionHandler = (transObj) => {
             console.log(transObj)
+            let find_category_obj = this.state.categories.find(category => transObj.category_name === category.name)
+            let revisedTrans =  {...transObj, category_id: find_category_obj.id}
+           
             let id = transObj.id
             let transArray = [...this.state.transactions]
             let newTransArray = transArray.filter(trans => trans.id !== id)
-          
+            const token = this.props.getToken()
+    
             const configObj = {
               method: 'PATCH',
               headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
               },
-              body: JSON.stringify(transObj)
+              body: JSON.stringify(revisedTrans)
             }
-          
+
             fetch(`http://localhost:3000/transactions/${id}`, configObj)
             .then(response => response.json())
             .then(revisedTrans => {    
@@ -145,6 +199,7 @@ class SummaryContainer extends React.Component {
           }
   
         deleteHandler = (obj) => {
+            const token = this.props.getToken()
             let id = obj.id
             let currentBudgetArray = [...this.state.budgets]
             let newBudgetArray = currentBudgetArray.filter(budget => budget.id !== id)
@@ -153,6 +208,7 @@ class SummaryContainer extends React.Component {
             const configObj = {
                 method: 'DELETE',
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
@@ -163,28 +219,22 @@ class SummaryContainer extends React.Component {
 
         }
 
-
-    componentDidMount () {
-        this.fetchBudgets()
-        this.fetchTransactions()
-        this.fetchBankAccounts()
-        this.fetchCategories()
-        this.fetchUsers()
-    }
-
     render () {
+
         return (
-            <> 
-            <div>
-            <Switch>
-                <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} />} />
-                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} />} />
-                {/* <Route path="/bank_accounts" render={() => <BankAccountContainer bank_accounts={this.state.bank_accounts} />} /> */}
-                <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} />} />
-                {/* <Route path="/" render={() =>  <MyProgress budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts}/>} /> */}
+
+            <>
+             <> 
+             <div className="App">
+            <Switch>   
+                <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
+                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts} currentUser={this.props.user}/>} />
+                <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} currentUser={this.props.user} />} />
             </Switch>
             </div>
-            </>
+            </> 
+        </>
+
         )
     }
 
