@@ -135,7 +135,6 @@ class SummaryContainer extends React.Component {
         .then(response => response.json())
         .then(
             revisedBudget => {    
-
           this.setState({
               budgets: [...newBudgetArray, budgetObj]
           }, () =>{this.props.history.push(`/budgets`)})
@@ -170,40 +169,17 @@ class SummaryContainer extends React.Component {
             })
         }
 
-        createTransHandler = (obj) => {
-            console.log(obj)
-            // let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
-          //   let month = new Date(obj.date).getMonth() + 1
-            // let newBudgetObj = {...obj, category_id: find_category_obj.id}
-  
-        //   const configObj = {
-        //       method: 'POST',
-        //       headers: {
-        //           'Content-Type': 'application/json',
-        //           'Accept': 'application/json',
-        //       },
-        //       'body': JSON.stringify(newBudgetObj)
-        //   }
-  
-        //   fetch("http://localhost:3000/user_categories", configObj)
-        //   .then(response => response.json())
-        //   .then(newObj => {
-        //       this.setState({
-        //           budgets: [...this.state.budgets, newObj]
-        //       })
-        //       this.props.history.push(`/budgets`)
-        //       })
-          }
-
-
 
         editTransactionHandler = (transObj) => {
             console.log(transObj)
+            let find_category_obj = this.state.categories.find(category => transObj.category_name === category.name)
+            let revisedTrans =  {...transObj, category_id: find_category_obj.id}
+           
             let id = transObj.id
             let transArray = [...this.state.transactions]
             let newTransArray = transArray.filter(trans => trans.id !== id)
             const token = this.props.getToken()
-          
+    
             const configObj = {
               method: 'PATCH',
               headers: {
@@ -211,9 +187,9 @@ class SummaryContainer extends React.Component {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
               },
-              body: JSON.stringify(transObj)
+              body: JSON.stringify(revisedTrans)
             }
-          
+
             fetch(`http://localhost:3000/transactions/${id}`, configObj)
             .then(response => response.json())
             .then(revisedTrans => {    

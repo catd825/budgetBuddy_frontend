@@ -6,6 +6,7 @@ class TransactionEdit extends React.Component {
     state={
         
         id: this.props.transactions.id || 0,
+        user_id: this.props.transactions.user_id || 0,
         category_id: this.props.transactions.category_id || 0,
         bank_account_id: this.props.transactions.bank_account_id || 0,
         date: this.props.transactions.date || '',
@@ -48,16 +49,16 @@ class TransactionEdit extends React.Component {
         // console.log(this.mapCategories())
         return(
             <>
-            <br/><br/><br/><br/>
+            <br/>
             <h2>Edit Transaction Category</h2>
             <Form onSubmit={this.editHelper}>
             <p>Date: {this.props.transactions.date}</p>
             <p>Description: {this.props.transactions.description}</p>
 
             <FormGroup>
-                <Label for="exampleCustomSelect">Select New Category</Label>
+                <Label for="exampleCustomSelect"></Label>
                 <br/>
-                <CustomInput name="category_name" type="select" onChange={this.changeHelper}>
+                <CustomInput style={{ width: "300px" }} name="category_name" type="select" onChange={this.changeHelper}>
                 <option>Select Category</option>
                         {this.mapCategories()}
                 </CustomInput>

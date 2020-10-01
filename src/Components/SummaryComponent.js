@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'reactstrap';
+import { Table, ListGroup, ListGroupItem } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
 import BarChart from './BarChart'
 
@@ -8,7 +8,7 @@ import BarChart from './BarChart'
 
 class SummaryComponent extends React.Component {
 
-state={month: 9}
+state={month: 10}
 
 
 
@@ -222,25 +222,27 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
 
                 <BarChart data={this.chartId()} projectedBudgets={this.filterBudgetsByMonth()}/>
                 <div className="summary-div"><h3></h3>
-                    <p>Expected Earnings: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0))}</p>
-                    <p>Expected to Spend: ${this.budgetAmount().reduce((a,b) => a+b, 0)}</p>
-                    <p>Savings goal: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0)) - this.budgetAmount().reduce((a,b) => a+b, 0)}</p>
-                    <br/>
-                    <p>Actual Earnings: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0))}</p>
-                    <p>Spent to date: ${Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</p>
-                    <p>Remaining for the month: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</p>
+                <ListGroup>
+                    <ListGroupItem><h5><b>Summary</b></h5></ListGroupItem>
+                    <ListGroupItem>Expected Earnings: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0))}</ListGroupItem>
+                    <ListGroupItem>Expected to Spend: ${this.budgetAmount().reduce((a,b) => a+b, 0)}</ListGroupItem>
+                    <ListGroupItem>Savings goal: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0)) - this.budgetAmount().reduce((a,b) => a+b, 0)}</ListGroupItem>
+                    <ListGroupItem>Actual Earnings: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0))}</ListGroupItem>
+                    <ListGroupItem>Spent to date: ${Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</ListGroupItem>
+                    <ListGroupItem>Remaining for the month: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</ListGroupItem>
+                </ListGroup>
+{/* 
                 <p>{
                     this.actualIncome().reduce((a,b) => a+b, 0) - this.budgetAmount().reduce((a,b) => a+b, 0) > Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)) ?
                         ""
                         : ""
                     }
 
-                </p>
-                
-
+                </p> */}
+            
                 </div>
             </div>
-            <br/> <br/> <br/>
+            <br/>
             {/* <h5>Earning Summary</h5> */}
 
             {/* <Table>

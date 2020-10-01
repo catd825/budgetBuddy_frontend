@@ -12,7 +12,7 @@ const ModalForm = (props) => {
 
   const toggle = () => setModal(!modal);
 
-console.log(props)
+// console.log(props)
   return (
     <div>
 

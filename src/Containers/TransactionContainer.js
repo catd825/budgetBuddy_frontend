@@ -7,7 +7,7 @@ import TransactionCreate from '../Components/TransactionCreate'
 class TransactionContainer extends React.Component {
 
     render () {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <>
                 {this.props.transactions === null 

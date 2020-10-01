@@ -8,7 +8,7 @@ import CreateModalForm from './CreateModalForm'
 
 class BudgetList extends React.Component {
 
-  state = {month: 9}
+  state = {month: 10}
 
   changeHandler = (e) => {
     this.setState({month: parseInt(e.target.value)})
@@ -44,10 +44,10 @@ class BudgetList extends React.Component {
         return(
             <>
             <>
-              <br/><br/>
+              <br/><br/><br/><br/>
                 <CreateModalForm currentUser={this.props.currentUser} submitHandler={this.props.submitHandler} budgets={this.props.budgets} categories={this.props.categories} parentComponent="budgetContainer" buttonLabel="Create a New Budget"/>      
                   {/* <Button onClick={this.routeChange}>Create New Budget</Button> */}
-                <br/><br/>  
+                <br/> 
                 <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
                 <br/><br/>  
             <Table>
