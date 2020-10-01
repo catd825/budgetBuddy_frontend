@@ -32,7 +32,6 @@ class BudgetCreate extends React.Component {
                 if(budget.amount !== 0 && budget.month === parseInt(this.state.month)){
                 return budget.category_name
                 }
-                // debugger
             })                   
         }
     }

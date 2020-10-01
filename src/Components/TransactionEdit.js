@@ -37,7 +37,6 @@ class TransactionEdit extends React.Component {
         if (this.props.categories){
             let category_name = ""
             return this.props.categories.map(category => {
-                // return category_name = category.name
                 return <option>{category_name = category.name}</option>
             }) 
         } 
@@ -45,8 +44,6 @@ class TransactionEdit extends React.Component {
 
     
     render() {
-        // console.log(this.props)
-        // console.log(this.mapCategories())
         return(
             <>
             <br/>

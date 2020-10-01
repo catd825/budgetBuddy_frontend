@@ -114,7 +114,6 @@ class SummaryContainer extends React.Component {
 
 
     editBudgetHandler = (budgetObj) => {
-        // console.log(budgetObj)
         let id = budgetObj.id
         
         let budgetArray = [...this.state.budgets]
@@ -145,7 +144,6 @@ class SummaryContainer extends React.Component {
 
       createBudgetHandler = (obj) => {
           let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
-        //   let month = new Date(obj.date).getMonth() + 1
           let newBudgetObj = {...obj, category_id: find_category_obj.id}
 
         const token = this.props.getToken()  
@@ -222,9 +220,6 @@ class SummaryContainer extends React.Component {
         }
 
     render () {
-
-        // console.log("this.props.user", this.props.user.id)
-        // console.log("this.state.transactions", this.state.transactions)
 
         return (
 

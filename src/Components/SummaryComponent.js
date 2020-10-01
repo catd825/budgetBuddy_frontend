@@ -11,8 +11,6 @@ class SummaryComponent extends React.Component {
 state={month: 10}
 
 
-
-
 changeHandler = (e) => {
     this.setState({month: parseInt(e.target.value)})
 }
@@ -48,11 +46,9 @@ categoryId = () => {
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
     
     if(trans_type ==="Expense" && absValue>0){
-    // console.log(category_id, category_name,amount, trans_type, month)
     return (
         <>
             <tr>
-                {/* <td>{category_id}</td> */}
                 <td>{category_name}</td>
                 <td>${amount}</td> 
                 <td>${Math.abs(totalSpend)}</td> 
@@ -74,45 +70,21 @@ chartId = () => {
 
 renderChartData = ({ category_id, category_name, amount, trans_type, month}) => {
     let totalSpend = Math.round(this.findTotalSpend(category_id, month),2) || 0
-    // let variance = Math.round((amount + this.findTotalSpend(category_id, month)), 2)
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
     
     
     if(trans_type ==="Expense" && absValue > 0){
         let object={}
         object["name"]=category_name || 0
-        // console.log("totalspend", category_name)
-
         object["transaction"]=Math.abs(totalSpend) || 0
-        // console.log("totalspend", totalSpend)
-
         object["budget"]=amount|| 0
-        // console.log("totalspend", amount)
-
-        // console.log(object)
         return object 
     }
 
 }
 
-// renderChartData = ({ category_id, category_name, amount, trans_type, month}) => {
-//     let totalSpend = Math.round(this.findTotalSpend(category_id, month),2) || 0
-//     let variance = Math.round((amount + this.findTotalSpend(category_id, month)), 2)
-//     let absValue = Math.abs(amount) + Math.abs(totalSpend)
-    
-//     if(trans_type ==="Expense" && absValue>0){
-//         let object={}
-//         object["name"]=category_name || 0
-//         object["transaction"]=totalSpend || 0
-//         object["budget"]=amount|| 0
-//         return object 
-//     }
-// }
-
     findTotalSpend = (categoryId, month) => {
-        // console.log(categoryId)
         const categorySumById = this.totalCategorySpend();
-        // console.log("find total spend", categorySumById[categoryId]);
 
         if (categorySumById[categoryId]) {
             return categorySumById[categoryId][month]
@@ -125,7 +97,6 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
 
     totalCategorySpend = () => {
         const categoryMonthSumById = {}
-        // console.log(111111, this.filterTransactionsByMonth())
         this.filterTransactionsByMonth().forEach(transaction => {
             // check if object has key of category_id; if not, create that and set to transactionObj amount
             if (!(categoryMonthSumById[transaction.category_id])){
@@ -139,7 +110,6 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
                 categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
             }
         })
-        // console.log(22222, categoryMonthSumById)
         return categoryMonthSumById;
 }
 
@@ -175,7 +145,6 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
 
 
     projectedIncome = () => {
-        // return this.props.budgets.map(budget => {
         return this.filterBudgetsByMonth().map(budget => {
             if(budget.trans_type ==="Income" || budget.amount < 0){
                 return budget.amount}
@@ -231,50 +200,15 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
                     <ListGroupItem>Spent to date: ${Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</ListGroupItem>
                     <ListGroupItem>Remaining for the month: ${Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</ListGroupItem>
                 </ListGroup>
-{/* 
-                <p>{
-                    this.actualIncome().reduce((a,b) => a+b, 0) - this.budgetAmount().reduce((a,b) => a+b, 0) > Math.abs(this.actualIncome().reduce((a,b) => a+b, 0)) - Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)) ?
-                        ""
-                        : ""
-                    }
-
-                </p> */}
             
                 </div>
             </div>
             <br/>
-            {/* <h5>Earning Summary</h5> */}
-
-            {/* <Table>
-                    <thead>
-                    <tr>
-                        <th>Category ID</th>
-                        <th>Category Name</th>
-                        <th>Projected Income</th> 
-                        <th>Actual Income</th>
-                        <th>Variance</th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>Income</td>
-                        <td>${this.projectedIncome().reduce((a,b) => a+b, 0)}</td>
-                        <td>${this.actualIncome().reduce((a,b) => a+b, 0)}</td>
-                        <td>${this.projectedIncome().reduce((a,b) => a+b, 0) + this.actualIncome().reduce((a,b) => a+b, 0)}</td>
-                    </tr>
-                    </tbody>
-                </Table>
-                <br/> <br/> <br/> */}
-
             
             <h5>Spending Summary</h5>
                 <Table>
                     <thead>
                     <tr>
-                        {/* <th>Category ID</th> */}
                         <th>Category Name</th>
                         <th>Expense Budget</th> 
                         <th>Spend by Category Amount</th>
@@ -288,7 +222,6 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
                     {this.categoryId() || null}
                     <tr>
                         <td>Grand Total</td>
-                        {/* <td></td> */}
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0)}</td>
                         <td>${Math.abs(Math.round(this.transAmount().reduce((a,b) => a+b, 0),2))}</td>
                         <td>${this.budgetAmount().reduce((a,b) => a+b, 0) + Math.round(this.transAmount().reduce((a,b) => a+b, 0),2)}</td>

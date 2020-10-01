@@ -30,15 +30,12 @@ class Login extends React.Component {
     submitHandler = (e) => {
         e.preventDefault()
         this.props.submitHandler(this.state)
-        // this.resetForm()
     }
 
 
     render () {
         return (
             <>
-                {/* {this.props.user === false ? */}
-                <>
                 
                 <br/><br/><br/>
                 <h2>budgetBuddy</h2>
@@ -58,23 +55,11 @@ class Login extends React.Component {
                                 <Input style={{ width: "300px" }} type="password" name="password" placeholder="password" value={this.state.password} onChange={this.changeHandler} />
                             </FormGroup>
                             
-
-
-
                             <Button type="submit" value="Login">Submit</Button><br/><br/>
 
                         </Form>
                     </div>
                     <NavLink style={{ color: "black" }} tag={Link} to="/signup">New here? Sign up!</NavLink>
-                </>
-                {/* // :
-                // <>
-                //     <div className="center">
-                //         <h1>Please logout before signing up!</h1>
-                //     </div> 
-                //     <button type="button" onClick={this.props.clickHandler}>Logout</button>
-                // </>
-                // } */}
                 
             </>
         )

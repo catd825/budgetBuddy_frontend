@@ -8,10 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  // UncontrolledDropdown,
-  // DropdownToggle,
-  // DropdownMenu,
-  // DropdownItem,
   NavbarText
 } from 'reactstrap';
 
@@ -41,44 +37,12 @@ const NavBar = (props) => {
                 </NavLink>
               </NavItem>
 
-              {/* {props.currentUser ?  
-              null
-                : <>
-                <NavItem>
-                  <NavLink tag={Link} to="/signup">
-                   Signup
-                  </NavLink>
-                </NavItem>
-                </>} */}
-
                 <NavItem>
                   <NavLink tag={Link} onClick={props.clickHandler} to="/login">
                    Logout
                   </NavLink>
                 </NavItem>
-  
-
-
-
-            {/* <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
-
-
+          
           </Nav>
           <NavbarText>{props.currentUser? `Welcome, ${props.currentUser.name}! ` : null} </NavbarText>
         </Collapse>

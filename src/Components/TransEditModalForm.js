@@ -12,7 +12,6 @@ const ModalForm = (props) => {
 
   const toggle = () => setModal(!modal);
 
-// console.log(props)
   return (
     <div>
 

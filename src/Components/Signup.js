@@ -27,8 +27,6 @@ class Signup extends React.Component {
 
     render () {
         return (
-            <>
-                {/* {this.props.user === false ? */}
                 <>
                 <br/><br/><br/>
                 <h2>budgetBuddy</h2>
@@ -57,15 +55,6 @@ class Signup extends React.Component {
                         </Form>
                     </div>
                     <NavLink style={{ color: "black" }} tag={Link} to="/login">Returning User? Log In!</NavLink>
-                </>
-                {/* // :
-                // <>
-                //     <div className="center">
-                //         <h1>Please logout before signing up!</h1>
-                //     </div> 
-                //     <button type="button" onClick={this.props.clickHandler}>Logout</button>
-                // </>
-                // } */}
                 
             </>
         )

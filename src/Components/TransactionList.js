@@ -61,15 +61,13 @@ filterTransactionsByMonth = () => {
 
 
     render () {
-      // console.log("transactions", this.props.transactions)
-      // console.log("month", this.state)
+
         return (
             <>
             <br/><br/><br/><br/>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
             <div className="App" className="center"><TransactionFilter searchHandler={this.searchHandler} searchValue={this.state.searchValue} /></div>
             <br/>
-            {/* <Button onClick={this.routeChange}>Create New Budget</Button> */}
             <p>Total Transactions ${Math.round(this.transTotal().reduce((a,b) => a+b, 0),2)}</p>
             <br/>
             <Table>
