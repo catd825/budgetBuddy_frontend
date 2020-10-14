@@ -4,7 +4,7 @@ import { Form, FormGroup, Label, Input, CustomInput } from 'reactstrap';
 
 class TransactionCreate extends React.Component {
     state = {
-        bank_account_id: 0,
+        bank_account_id: 1,
         category_id: "",
         amount: 0,
         category_name: "",

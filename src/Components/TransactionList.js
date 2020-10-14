@@ -4,6 +4,7 @@ import TransactionItem from './TransactionItem';
 import { Table } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
 import TransactionFilter from './TransactionFilter'
+import CreateTransModalForm from './CreateTransModalForm'
 
 class TransactionList extends React.Component {
 
@@ -66,7 +67,11 @@ filterTransactionsByMonth = () => {
             <>
             <br/><br/><br/><br/>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
-            <div className="App" className="center"><TransactionFilter searchHandler={this.searchHandler} searchValue={this.state.searchValue} /></div>
+            <div className="App" className="center">
+            <br/><br/><br/><br/>
+            <CreateTransModalForm currentUser={this.props.currentUser} submitHandler={this.props.submitHandler} budgets={this.props.budgets} categories={this.props.categories} parentComponent="transactionContainer" buttonLabel="Create a New Transaction"/>      
+            <br/><br/>     
+            <TransactionFilter searchHandler={this.searchHandler} searchValue={this.state.searchValue} /></div>
             <br/>
             <p>Total Transactions ${Math.round(this.transTotal().reduce((a,b) => a+b, 0),2)}</p>
             <br/>

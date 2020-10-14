@@ -31,8 +31,6 @@ class SummaryContainer extends React.Component {
 
 
     fetchBudgets = (token) => {
-        // const token = this.props.getToken()
-        
         fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/user_categories`, {
             method: "GET",
             headers: {
@@ -41,7 +39,6 @@ class SummaryContainer extends React.Component {
                 })
         .then(response => response.json())
         .then(retrievedBudgets => {
-            // debugger
             this.setState({
                 budgets : [...retrievedBudgets]
             })
@@ -49,7 +46,6 @@ class SummaryContainer extends React.Component {
     }
 
     fetchTransactions = (token) => {
-        // const token = this.props.getToken()
         fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/transactions`, {
             method: "GET",
             headers: {
@@ -65,7 +61,6 @@ class SummaryContainer extends React.Component {
     }
 
     fetchBankAccounts = (token) => {
-        // const token = this.props.getToken()
         fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/bank_accounts`, {
             method: "GET",
             headers: {
@@ -81,7 +76,6 @@ class SummaryContainer extends React.Component {
     }
 
     fetchCategories = (token) => {
-        // const token = this.props.getToken()
         fetch(`http://localhost:3000/categories`, {
             method: "GET",
             headers: {
@@ -115,7 +109,6 @@ class SummaryContainer extends React.Component {
 
     editBudgetHandler = (budgetObj) => {
         let id = budgetObj.id
-        
         let budgetArray = [...this.state.budgets]
         let newBudgetArray = budgetArray.filter(budget => budget.id !== id)
         const token = this.props.getToken() 
@@ -166,6 +159,37 @@ class SummaryContainer extends React.Component {
             this.props.history.push(`/budgets`)
             })
         }
+
+
+
+        createTransHandler = (obj) => {
+            let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
+            let objMonth = new Date(obj.date).getMonth() + 1
+            let newAmount = obj.trans_type === "Expense" ? -Math.abs(parseInt(obj.amount)) : parseInt(obj.amount)
+            let newTransObj = {...obj, category_id: find_category_obj.id, month: objMonth, amount: newAmount}
+  
+          const token = this.props.getToken()  
+          const configObj = {
+              method: 'POST',
+              headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+              },
+              'body': JSON.stringify(newTransObj)
+          }
+  
+          fetch("http://localhost:3000/transactions", configObj)
+          .then(response => response.json())
+          .then(newTransObj => {
+              this.setState({
+                  transactions: [...this.state.transactions, newTransObj]
+              }, console.log(this.state.transactions))
+              this.props.history.push(`/transactions`)
+              })
+          }
+  
+
 
 
         editTransactionHandler = (transObj) => {
