@@ -3,7 +3,7 @@ import { Input } from 'reactstrap';
 
 class TransactionFilter extends React.Component {
     render () {
-        console.log(this.props)
+        // console.log(this.props)
         return(
             <div id="search" style={{ width: "500px" }}>
                 <form id="searchForm">
