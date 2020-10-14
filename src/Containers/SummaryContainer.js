@@ -166,8 +166,8 @@ class SummaryContainer extends React.Component {
             let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
             let objMonth = new Date(obj.date).getMonth() + 1
             let newAmount = obj.trans_type === "Expense" ? -Math.abs(parseInt(obj.amount)) : parseInt(obj.amount)
-            let newTransObj = {...obj, category_id: find_category_obj.id, month: objMonth, amount: newAmount}
-  
+            let newTransObj = {...obj, category_id: find_category_obj.id, month: objMonth, amount: newAmount, bank_account_id: 1}
+            
           const token = this.props.getToken()  
           const configObj = {
               method: 'POST',
@@ -178,13 +178,14 @@ class SummaryContainer extends React.Component {
               },
               'body': JSON.stringify(newTransObj)
           }
+
   
           fetch("http://localhost:3000/transactions", configObj)
           .then(response => response.json())
           .then(newTransObj => {
               this.setState({
                   transactions: [...this.state.transactions, newTransObj]
-              }, console.log(this.state.transactions))
+              }, console.log(newTransObj))
               this.props.history.push(`/transactions`)
               })
           }
