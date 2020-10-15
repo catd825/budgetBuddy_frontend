@@ -223,7 +223,7 @@ class SummaryContainer extends React.Component {
               })
           }
   
-        deleteHandler = (obj) => {
+        deleteBudgetHandler = (obj) => {
             const token = this.props.getToken()
             let id = obj.id
             let currentBudgetArray = [...this.state.budgets]
@@ -241,8 +241,30 @@ class SummaryContainer extends React.Component {
 
             fetch(`http://localhost:3000/user_categories/${id}`, configObj)
             .then(response => response.json())
-
         }
+
+
+        deleteTransHandler = (obj) => {
+            const token = this.props.getToken()
+            let id = obj.id
+            let currentTransArray = [...this.state.transactions]
+            let newTransArray = currentTransArray.filter(trans => trans.id !== id)
+            this.setState({transactions: newTransArray})
+
+            const configObj = {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            }
+
+            fetch(`http://localhost:3000/transactions/${id}`, configObj)
+            .then(response => response.json())
+        }
+
+
 
     render () {
 
@@ -252,8 +274,8 @@ class SummaryContainer extends React.Component {
              <> 
              <div className="App">
             <Switch>   
-                <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
-                <Route path="/transactions" render={() => <TransactionContainer editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts} currentUser={this.props.user}/>} />
+                <Route path="/budgets" render={() => <BudgetContainer deleteHelper={this.deleteBudgetHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
+                <Route path="/transactions" render={() => <TransactionContainer deleteHandler={this.deleteTransHandler} editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts} currentUser={this.props.user}/>} />
                 <Route path="/" render={() =>  <SummaryComponent budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} currentUser={this.props.user} />} />
             </Switch>
             </div>

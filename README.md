@@ -11,7 +11,7 @@
 
 # Frontend Installation Instructions 
 -Run the [backend](https://github.com/catd825/budgetBuddy_backend_Mod5) first
--Once Rails is running, launch frontend on http://localhost:3001/:
+-Once Rails is running, launch frontend on http://localhost:3001/ :
 
 ```
 cd ..
