@@ -2,9 +2,7 @@ import React from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import TransactionContainer from './TransactionContainer'
 import BudgetContainer from './BudgetContainer'
-// import BankAccountContainer from './BankAccountContainer'
 import SummaryComponent from '../Components/SummaryComponent.js'
-// import MyProgress from '../Components/MyProgress.js'
 
 
 class SummaryContainer extends React.Component {
@@ -21,7 +19,6 @@ class SummaryContainer extends React.Component {
     componentDidMount () {
         {
             const token = this.props.getToken()
-            // this.fetchUsers(token)
             this.fetchBudgets(token)
             this.fetchBankAccounts(token)
             this.fetchCategories(token)
