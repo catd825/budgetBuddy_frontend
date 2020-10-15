@@ -1,14 +1,14 @@
 import React from 'react'
 import BudgetItem from './BudgetItem'
 import { withRouter} from 'react-router-dom'
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import SummaryFilter from './SummaryFilter'
 import CreateModalForm from './CreateModalForm'
 
 
 class BudgetList extends React.Component {
 
-  state = {month: 10}
+  state = {month: this.props.currentMonth}
 
   changeHandler = (e) => {
     this.setState({month: parseInt(e.target.value)})
@@ -16,22 +16,13 @@ class BudgetList extends React.Component {
 
 
     budgetList = () => {
-        return this.filterBudgetsByMonth().map(budget => {
-          if(budget.amount > 0){
-            return <BudgetItem key={budget.id} editHandler={this.props.editHandler} deleteHelper={this.props.deleteHelper} budgetObj={budget}/>
-          }
-        })
+        return this.filterBudgetsByMonth().map(budgetObj => budgetObj.amount > 0 ? <BudgetItem key={budgetObj.id} editHandler={this.props.editHandler} deleteHelper={this.props.deleteHelper} budgetObj={budgetObj}/> : "")
     }
 
 
     filterBudgetsByMonth = () => {
-      return this.props.budgets.filter(budgetObj => { 
-        if(this.state.month === budgetObj.month){ 
-          return budgetObj.month} else if (this.state.month === 0) { 
-            return budgetObj
-          }
-              })
-      }
+      return this.props.budgets.filter(budgetObj => this.state.month===budgetObj.month)
+  }
 
 
     render() {

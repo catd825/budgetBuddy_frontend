@@ -25,15 +25,9 @@ class BudgetCreate extends React.Component {
         })
     }
 
-//shows currently used categories for current Month
+    //retrieves categories User has not utilized for the month
     currentUserCategories = () => {
-        if(this.props.budgets) {
-            return this.props.budgets.map(budget => {
-                if(budget.amount !== 0 && budget.month === parseInt(this.state.month)){
-                return budget.category_name
-                }
-            })                   
-        }
+            return this.props.budgets.map(budgetObj => budgetObj.amount !==0 && budgetObj.month === parseInt(this.state.month) ? budgetObj.category_name : "")
     }
 
 

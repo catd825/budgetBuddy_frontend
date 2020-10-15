@@ -9,7 +9,7 @@ import CreateTransModalForm from './CreateTransModalForm'
 class TransactionList extends React.Component {
 
 
-  state = {month: 0,
+  state = {month: this.props.currentMonth,
           searchValue:''
         }
 
@@ -30,13 +30,8 @@ searchTransactions = () => {
 }  
 
 filterTransactionsByMonth = () => {
-  return this.searchTransactions().filter(transObj => {  //iterate over transactions 
-    if(this.state.month === transObj.month){  //if the object's month matches the current month selected, return those transactions
-      return transObj.month} else if (this.state.month === 0) {  //if the state is 0, return everything.
-        return transObj
-      }
-          })
-  }
+  return this.props.transactions.filter(transObj => this.state.month===transObj.month)
+}
 
 
     transList = () => {
@@ -67,7 +62,7 @@ filterTransactionsByMonth = () => {
             <>
             <br/><br/><br/><br/>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
-            <div className="App" className="center">
+            <div className="center">
             <br/><br/><br/><br/>
             <CreateTransModalForm currentUser={this.props.currentUser} submitHandler={this.props.submitHandler} budgets={this.props.budgets} categories={this.props.categories} parentComponent="transactionContainer" buttonLabel="Create a New Transaction"/>      
             <br/><br/>     

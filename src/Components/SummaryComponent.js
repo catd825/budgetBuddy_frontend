@@ -4,11 +4,9 @@ import SummaryFilter from './SummaryFilter'
 import BarChart from './BarChart'
 
 
-
-
 class SummaryComponent extends React.Component {
 
-state={month: 10}
+state={month: this.props.currentMonth}
 
 
 changeHandler = (e) => {
@@ -16,31 +14,14 @@ changeHandler = (e) => {
 }
 
 filterBudgetsByMonth = () => {
-    return this.props.budgets.filter(budgetObj => {  
-      if(this.state.month === budgetObj.month){  
-        return budgetObj.month} else if (this.state.month === 0) { 
-          return budgetObj}
-            })
-    }
+    return this.props.budgets.filter(budgetObj => this.state.month===budgetObj.month)
+}
 
 
-    // filterBudgetsByMonth = () => {
-    //     return this.props.budgets.filter(budgetObj => this.state.month === 0 ? budgetObj : budgetObj.month)
-    // }
+filterTransactionsByMonth = () => {
+    return this.props.transactions.filter(transObj => this.state.month===transObj.month)
+}
 
-    // filterTransactionsByMonth = () => {
-    //     return this.props.transactions.filter(transObj => {  
-    //       if(this.state.month === transObj.month){ 
-    //         return transObj.month} else if (this.state.month === 0) { 
-    //           return transObj
-    //         }
-    //             })
-    //     }
-
-
-    filterTransactionsByMonth = () => {
-        return this.props.transactions.filter(transObj => this.state.month === transObj.month || this.state.month === 0 )
-    }
 
 categoryId = () => {
      return this.filterBudgetsByMonth().map(budget => {
@@ -193,13 +174,13 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
             <br/> <br/> <br/>
             <SummaryFilter month={this.state.month} changeHandler={this.changeHandler} />
             <br/> <br/> <br/>
-            {this.state.month ===0 ? "" : 
+            {this.state.month === 0 ? "" : 
             <>
             <h5>Monthly Budget Summary {this.chooseMonth()}</h5>
             <div className="landing-page-div">
 
                 <BarChart data={this.chartId()} projectedBudgets={this.filterBudgetsByMonth()}/>
-                <div className="summary-div"><h3></h3>
+                <div className="summary-div">
                 <ListGroup>
                     <ListGroupItem><h5><b>Summary</b></h5></ListGroupItem>
                     <ListGroupItem>Expected Earnings: ${Math.abs(this.projectedIncome().reduce((a,b) => a+b, 0))}</ListGroupItem>

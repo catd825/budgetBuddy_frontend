@@ -34,12 +34,7 @@ class TransactionEdit extends React.Component {
 
 
     mapCategories = () => {
-        if (this.props.categories){
-            let category_name = ""
-            return this.props.categories.map(category => {
-                return <option>{category_name = category.name}</option>
-            }) 
-        } 
+        return this.props.categories.map(category => <option>{category.name}</option>) 
     }
 
     
