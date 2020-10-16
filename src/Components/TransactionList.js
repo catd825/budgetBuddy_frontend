@@ -38,7 +38,7 @@ filterTransactionsByMonth = () => {
         return this.filterTransactionsByMonth().map(transObj=> <TransactionItem deleteHandler={this.props.deleteHandler} editHandler={this.props.editHandler} key={transObj.id} categories={this.props.categories} transactions={transObj}/>)
     }
 
-    transTotal = () => {
+    expenseTotal = () => {
       return this.filterTransactionsByMonth().map(transObj => {
           if(transObj.trans_type === "Expense"){
             return transObj.amount}
@@ -48,13 +48,20 @@ filterTransactionsByMonth = () => {
       })
   }
 
+  incomeTotal = () => {
+    return this.filterTransactionsByMonth().map(transObj => {
+        if(transObj.trans_type === "Income"){
+          return transObj.amount}
+        else{
+            return 0
+        }
+    })
+}
+
   routeChange=()=> {
     let path = `/transactions/new`;
     this.props.history.push(path)
   }
-
-
-
 
     render () {
 
@@ -68,7 +75,9 @@ filterTransactionsByMonth = () => {
             <br/><br/>     
             <TransactionFilter searchHandler={this.searchHandler} searchValue={this.state.searchValue} /></div>
             <br/>
-            <p>Total Transactions ${Math.round(this.transTotal().reduce((a,b) => a+b, 0),2)}</p>
+            <p>Total Income ${Math.round(this.incomeTotal().reduce((a,b) => a+b, 0),2)}</p>
+            <p>Total Expenses ${Math.round(this.expenseTotal().reduce((a,b) => a+b, 0),2)}</p>
+            {/* <p>Net Transactions ${Math.round(this.filterTransactionsByMonth().reduce((a,b) => a+b, 0),2)}</p> */}
             <br/>
             <Table>
             <thead>

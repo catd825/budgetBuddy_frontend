@@ -86,7 +86,7 @@ class SummaryContainer extends React.Component {
         .then(retrievedCategories => {
             this.setState({
                 categories : [...retrievedCategories]
-            }, ()=> console.log("fetch categories"))
+            })
         })
     }
 
@@ -161,13 +161,12 @@ class SummaryContainer extends React.Component {
         }
 
 
-
         createTransHandler = (obj) => {
             let find_category_obj = this.state.categories.find(category => obj.category_name === category.name)
             let objMonth = new Date(obj.date).getMonth() + 1
             let newAmount = obj.trans_type === "Expense" ? -Math.abs(parseInt(obj.amount)) : parseInt(obj.amount)
             let newTransObj = {...obj, category_id: find_category_obj.id, month: objMonth, amount: newAmount, bank_account_id: 1}
-            
+
           const token = this.props.getToken()  
           const configObj = {
               method: 'POST',

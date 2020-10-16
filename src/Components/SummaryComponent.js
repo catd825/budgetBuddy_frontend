@@ -44,7 +44,7 @@ categoryId = () => {
                 <td>${Math.abs(totalSpend)}</td> 
                 <td>${Math.abs(variance)}</td>
                 <td>{amount === 0 ? 0+"%" :
-                Math.abs(parseFloat(totalSpend/amount)).toFixed(2)*100+"%"}</td>  
+                Math.abs(parseFloat(totalSpend/amount)).toFixed(2)*100+"%"}</td> 
 
             </tr>
         </>
