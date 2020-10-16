@@ -77,7 +77,7 @@ filterTransactionsByMonth = () => {
             <br/>
             <p>Total Income ${Math.round(this.incomeTotal().reduce((a,b) => a+b, 0),2)}</p>
             <p>Total Expenses ${Math.round(this.expenseTotal().reduce((a,b) => a+b, 0),2)}</p>
-            {/* <p>Net Transactions ${Math.round(this.filterTransactionsByMonth().reduce((a,b) => a+b, 0),2)}</p> */}
+            <p>Net Transactions ${Math.round(this.incomeTotal().reduce((a,b) => a+b, 0),2) + Math.round(this.expenseTotal().reduce((a,b) => a+b, 0),2)}</p>
             <br/>
             <Table>
             <thead>

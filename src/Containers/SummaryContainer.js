@@ -275,7 +275,7 @@ class SummaryContainer extends React.Component {
             <Switch>   
                 <Route path="/budgets" render={() => <BudgetContainer currentMonth={this.currentMonth()} deleteHelper={this.deleteBudgetHandler} submitHandler={this.createBudgetHandler} editHandler={this.editBudgetHandler} categories={this.state.categories} budgets={this.state.budgets} users={this.state.users} currentUser={this.props.user} />} />
                 <Route path="/transactions" render={() => <TransactionContainer currentMonth={this.currentMonth()} deleteHandler={this.deleteTransHandler} editHandler={this.editTransactionHandler} transactions={this.state.transactions} categories={this.state.categories} users={this.state.users} submitHandler={this.createTransHandler} currentUser={this.props.user} bank_accounts={this.state.bank_accounts}/>} />
-                <Route path="/" render={() =>  <SummaryComponent currentMonth={this.currentMonth()} budgets={this.state.budgets} transactions={this.state.transactions} bank_accounts={this.state.bank_accounts} currentUser={this.props.user} />} />
+                <Route path="/" render={() =>  <SummaryComponent currentMonth={this.currentMonth()} budgets={this.state.budgets} transactions={this.state.transactions} currentUser={this.props.user} />} />
             </Switch>
             </div>
             </> 

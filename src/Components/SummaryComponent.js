@@ -31,9 +31,11 @@ categoryId = () => {
 
 
  renderRow = ({ category_id, category_name, amount, trans_type, month}) => {
+     
     let totalSpend = Math.round(this.findTotalSpend(category_id, month),2) || 0
     let variance = Math.round((amount + this.findTotalSpend(category_id, month)), 2)
     let absValue = Math.abs(amount) + Math.abs(totalSpend)
+    console.log(category_name, amount, totalSpend)
     
     if(trans_type ==="Expense" && absValue>0){
     return (
@@ -87,6 +89,7 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
 
     totalCategorySpend = () => {
         const categoryMonthSumById = {}
+        console.log(1111, categoryMonthSumById)
         this.filterTransactionsByMonth().forEach(transaction => {
             // check if object has key of category_id; if not, create that and set to transactionObj amount
             if (!(categoryMonthSumById[transaction.category_id])){
@@ -100,6 +103,7 @@ renderChartData = ({ category_id, category_name, amount, trans_type, month}) => 
                 categoryMonthSumById[transaction.category_id][transaction.month] += transaction.amount
             }
         })
+        console.log(2222, categoryMonthSumById)
         return categoryMonthSumById;
 }
 
