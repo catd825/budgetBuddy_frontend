@@ -6,9 +6,7 @@ class TransactionCategory extends React.Component {
 
         return (
             <li>
-            
-            {this.props.transObj.category_name}
-
+                {this.props.transObj.category_name}
             </li>
         )
     }

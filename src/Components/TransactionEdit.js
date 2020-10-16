@@ -43,24 +43,23 @@ class TransactionEdit extends React.Component {
             <>
             <br/>
             <h2>Edit Transaction Category</h2>
-            <Form onSubmit={this.editHelper}>
-            <p>Date: {this.props.transactions.date}</p>
-            <p>Description: {this.props.transactions.description}</p>
+                <Form onSubmit={this.editHelper}>
+                    <p>Date: {this.props.transactions.date}</p>
+                    <p>Description: {this.props.transactions.description}</p>
 
-            <FormGroup>
-                <Label for="exampleCustomSelect"></Label>
-                <br/>
-                <CustomInput style={{ width: "300px" }} name="category_name" type="select" onChange={this.changeHelper}>
-                <option>Select Category</option>
-                        {this.mapCategories()}
-                </CustomInput>
-            </FormGroup>
+                        <FormGroup>
+                            <Label for="exampleCustomSelect"></Label><br/>
+                            <CustomInput style={{ width: "300px" }} name="category_name" type="select" onChange={this.changeHelper}>
+                                <option>Select Category</option>
+                                {this.mapCategories()}
+                            </CustomInput>
+                        </FormGroup>
 
-            <p>Amount: ${this.props.transactions.amount}</p>
+                    <p>Amount: ${this.props.transactions.amount}</p>
 
-            <Input type="submit"></Input>
+                    <Input type="submit"></Input>
 
-            </Form>
+                </Form>
             
             </>
         )

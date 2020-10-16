@@ -23,7 +23,6 @@ class TransCreate extends React.Component {
     }
 
     changeHelper =(e) => {
-        // console.log(e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -40,69 +39,67 @@ class TransCreate extends React.Component {
 
 
     render() {
-        // console.log(this.props)
-
         return(
             <>
-            {this.props.transactions === null ? "" : 
-            <>
-                <Form onSubmit={this.submitHelper}>
-                    
-                <FormGroup>
-                    <Label for="category_name">Select</Label>
-                        <Input type="select" name="category_name" onChange={this.changeHelper} value={this.state.category_name}>
-                        <option>Select Category</option>
-                        {this.mapCategories()}
-                        </Input>
-                </FormGroup>
+                {this.props.transactions === null ? "" : 
+                <>
+                    <Form onSubmit={this.submitHelper}>
+                        
+                        <FormGroup>
+                            <Label for="category_name">Select</Label>
+                            <Input type="select" name="category_name" onChange={this.changeHelper} value={this.state.category_name}>
+                                <option>Select Category</option>
+                                {this.mapCategories()}
+                            </Input>
+                        </FormGroup>
 
-                <FormGroup>
-                    <Label style={{fontSize:"1rem"}} for="amount">How much was the expense?</Label>
-                    <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
-                </FormGroup>
+                        <FormGroup>
+                            <Label style={{fontSize:"1rem"}} for="amount">How much was the expense?</Label>
+                            <Input onChange={this.changeHelper} type="number" name="amount" value={this.state.amount} />
+                        </FormGroup>
 
 
-                <FormGroup>
-                    <Label for="exampleSelect">Select Income or Expense</Label>
-                    <Input type="select" name="trans_type" id="exampleSelect" onChange={this.changeHelper} value={this.state.trans_type} >
-                    <option>Select</option>
-                    <option>Expense</option>
-                    <option>Income</option>
-                    </Input>
-                </FormGroup>
-                
-                <FormGroup>
-                    <Label for="exampleSearch">Description</Label>
-                    <Input
-                    type="search"
-                    name="description"
-                    id="exampleDescription"
-                    placeholder="add description"
-                    value={this.state.description}
-                    onChange={this.changeHelper}
-                    />
-                </FormGroup>
+                        <FormGroup>
+                            <Label for="exampleSelect">Select Income or Expense</Label>
+                            <Input type="select" name="trans_type" id="exampleSelect" onChange={this.changeHelper} value={this.state.trans_type} >
+                                <option>Select</option>
+                                <option>Expense</option>
+                                <option>Income</option>
+                            </Input>
+                        </FormGroup>
+                        
+                        <FormGroup>
+                            <Label for="exampleSearch">Description</Label>
+                            <Input
+                                type="search"
+                                name="description"
+                                id="exampleDescription"
+                                placeholder="add description"
+                                value={this.state.description}
+                                onChange={this.changeHelper}
+                            />
+                        </FormGroup>
 
-                <FormGroup>
-                    <Label for="exampleDate">Date</Label>
-                    <Input
-                    type="date"
-                    name="date"
-                    id="exampleDate"
-                    placeholder="date placeholder"
-                    value={this.state.date}
-                    onChange={this.changeHelper}
-                    />
-                </FormGroup>
+                        <FormGroup>
+                            <Label for="exampleDate">Date</Label>
+                                <Input
+                                type="date"
+                                name="date"
+                                id="exampleDate"
+                                placeholder="date placeholder"
+                                value={this.state.date}
+                                onChange={this.changeHelper}
+                            />
+                        </FormGroup>
 
-                    <Input type="submit"></Input>
-                </Form>
-            </>
+                        <Input type="submit"></Input>
+                        
+                    </Form>
+                </>
         }
         </>
         )
     }
-
 
 }
 

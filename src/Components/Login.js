@@ -10,28 +10,15 @@ class Login extends React.Component {
         password: "",
     }
 
-    // resetForm = () => {
-    //     this.setState({
-    //         username: "",
-    //         password: "",
-    //         birthdate: "",
-    //         gender: "",
-    //         gender_other: false,
-    //         location: ""
-    //     })
-    // }
-
     changeHandler = (e) => {
         this.setState({ [e.target.name]: e.target.value})
         
     }
 
-
     submitHandler = (e) => {
         e.preventDefault()
         this.props.submitHandler(this.state)
     }
-
 
     render () {
         return (
@@ -59,6 +46,7 @@ class Login extends React.Component {
 
                         </Form>
                     </div>
+                    
                     <NavLink style={{ color: "black" }} tag={Link} to="/signup">New here? Sign up!</NavLink>
                 
             </>

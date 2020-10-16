@@ -14,14 +14,13 @@ const ModalForm = (props) => {
 
   return (
     <div>
-
-    <Button color="secondary" onClick={toggle}>{buttonLabel}</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Edit Budget</ModalHeader>
-        <ModalBody>
-            <TransactionEdit currentUser={props.currentUser} categories={props.categories} editHandler={props.editHandler} transactions={props.transactions} toggle={toggle}/>
-        </ModalBody>
-      </Modal>
+      <Button color="secondary" onClick={toggle}>{buttonLabel}</Button>
+        <Modal isOpen={modal} toggle={toggle} className={className}>
+          <ModalHeader toggle={toggle}>Edit Budget</ModalHeader>
+          <ModalBody>
+              <TransactionEdit currentUser={props.currentUser} categories={props.categories} editHandler={props.editHandler} transactions={props.transactions} toggle={toggle}/>
+          </ModalBody>
+        </Modal>
     </div>
   );
 }

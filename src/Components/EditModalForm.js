@@ -15,7 +15,6 @@ const ModalForm = (props) => {
 
   return (
     <div>
-
     <Button color="secondary" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Edit Budget</ModalHeader>

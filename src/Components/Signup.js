@@ -29,7 +29,7 @@ class Signup extends React.Component {
         return (
                 <>
                 <br/><br/><br/>
-                <h2>budgetBuddy</h2>
+                    <h2>budgetBuddy</h2>
                 <br/><br/>
                 <div className="center">
                     

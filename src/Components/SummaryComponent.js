@@ -6,7 +6,7 @@ import BarChart from './BarChart'
 
 class SummaryComponent extends React.Component {
 
-state={month: this.props.currentMonth}
+    state={month: this.props.currentMonth}
 
 
 changeHandler = (e) => {
