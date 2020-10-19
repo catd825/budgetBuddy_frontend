@@ -21,7 +21,7 @@ npm install && npm start
 ```
 ## Demos
 
-You can view the video demo ![here](https://youtu.be/xrYvw2IYEmI).  Heroku coming soon.
+You can view the video demo [here](https://youtu.be/xrYvw2IYEmI).  Heroku coming soon.
 
 Login
 
@@ -43,7 +43,7 @@ Edit Transaction
 
 View by Month
 
-<img src="https://j.gifs.com/915YWB.gif width=600>
+<img src="https://j.gifs.com/915YWB.gif" width=600>
           
           
 Edit Budget
