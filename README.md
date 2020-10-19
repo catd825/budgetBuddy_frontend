@@ -1,6 +1,6 @@
 # budgetBuddy
 
-A simple way to create and modify monthly budgets and transactions.
+A simple way to create and modify monthly budgets and transactions.  This is a capstone project for the Flatiron School.
 
 
 ## Frontend Prerequisites
