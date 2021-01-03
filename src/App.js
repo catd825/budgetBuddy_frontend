@@ -5,14 +5,38 @@ import Navbar from './Components/Navbar';
 import SummaryContainer from './Containers/SummaryContainer'
 import Signup from './Components/Signup'
 import Login from './Components/Login'
-// import TransactionContainer from './Containers/TransactionContainer'
-// import BudgetContainer from './Containers/BudgetContainer'
-// import Link from './Components/Link';
 
 class App extends React.Component {
   
   state = {
     user: false
+  }
+  
+  getToken = () => {
+    return localStorage.getItem("token")
+  }
+  
+
+  componentDidMount(){
+    const token = this.getToken()
+    if(token){
+      this.retrieveUser(token)
+    }
+  }
+
+
+  retrieveUser = () => {
+    const token = this.getToken()
+    if (token) {
+      fetch("http://localhost:3000/api/v1/profile", {
+        method: "GET",
+        headers: {Authorization: `Bearer ${token}`},
+      })
+      .then(response => response.json())
+      .then(data => this.setState({user: data.user}))
+    } else {
+      this.props.history.push("/signup")
+    }
   }
   
 
@@ -57,33 +81,6 @@ loginHandler = (userInfo) => {
 
 }
 
-
-
-getToken = () => {
-  return localStorage.getItem("token")
-}
-
-
-retrieveUser = () => {
-  const token = this.getToken()
-  if (token) {
-    fetch("http://localhost:3000/api/v1/profile", {
-      method: "GET",
-      headers: {Authorization: `Bearer ${token}`},
-    })
-    .then(response => response.json())
-    .then(data => this.setState({user: data.user}))
-  } else {
-    this.props.history.push("/signup")
-  }
-}
-
-componentDidMount(){
-    const token = this.getToken()
-    if(token){
-      this.retrieveUser(token)
-    }
-}
 
 logOutHandler = () => {
   localStorage.removeItem("token")
